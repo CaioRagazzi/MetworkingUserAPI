@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MetWorkingUserAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210131210922_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20210201112120_firstMigration")]
+    partial class firstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

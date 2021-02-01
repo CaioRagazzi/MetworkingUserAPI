@@ -7,7 +7,9 @@ namespace MetWorkingUserAPI.Models
         public int UserId { get; set; }
         public string Name { get; set; }
         [MaxLength(255)]
+        [EmailAddress]
         public string Email { get; set; }
+        [MinLength(6)]
         public string Password { get; set; }
     }   
 }

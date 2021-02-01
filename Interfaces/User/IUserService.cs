@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 using MetWorkingUserAPI.Models;
 
 namespace MetWorkingUserAPI.Interfaces
 {
     public interface IUserService
     {
-        User GetById(int id);
-        void Create(User user);
+        Task<User> GetById(int id);
+        Task<User> Create(User user);
     }   
 }
