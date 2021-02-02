@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MetWorkingUserApplication\MetWorkingUserApplication.csproj" />
+    <ProjectReference Include="..\MetWorkingUserInfrastructure\MetWorkingUserInfrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

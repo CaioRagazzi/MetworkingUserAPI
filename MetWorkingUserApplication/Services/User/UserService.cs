@@ -1,15 +1,14 @@
 using System.Threading.Tasks;
-using MetWorkingUserAPI.Context;
-using MetWorkingUserAPI.Interfaces;
-using MetWorkingUserAPI.Models;
+using MetWorkingUserApplication.Interfaces;
+using MetWorkingUserDomain.Entities;
 
-namespace MetWorkingUserAPI.Services
+namespace MetWorkingUserApplication.Services
 {
     public class UserService : IUserService
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IApplicationDbContext _applicationDbContext;
 
-        public UserService(ApplicationDbContext context)
+        public UserService(IApplicationDbContext context)
         {
             _applicationDbContext = context;
         }

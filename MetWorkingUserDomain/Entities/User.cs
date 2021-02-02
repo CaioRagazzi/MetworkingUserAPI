@@ -1,10 +1,11 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MetWorkingUserAPI.Models
+namespace MetWorkingUserDomain.Entities
 {
-    public class User
+    public class User : IEntity
     {
-        public int UserId { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         [MaxLength(255)]
         [EmailAddress]

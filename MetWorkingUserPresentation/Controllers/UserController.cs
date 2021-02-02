@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using MetWorkingUserAPI.Interfaces;
-using MetWorkingUserAPI.Models;
+using MetWorkingUserApplication.Interfaces;
+using MetWorkingUserDomain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MetWorkingUserAPI.Controllers
+namespace MetWorkingUserPresentation.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -19,7 +19,7 @@ namespace MetWorkingUserAPI.Controllers
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id){
-            var user = await _userService.GetById(id);
+            User user = await _userService.GetById(id);
 
             return Ok(user);
         }

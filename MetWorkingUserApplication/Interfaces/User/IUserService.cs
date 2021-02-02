@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using MetWorkingUserAPI.Models;
+using MetWorkingUserDomain.Entities;
 
-namespace MetWorkingUserAPI.Interfaces
+namespace MetWorkingUserApplication.Interfaces
 {
     public interface IUserService
     {

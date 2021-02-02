@@ -1,8 +1,8 @@
-using MetWorkingUserAPI.Models;
+using MetWorkingUserDomain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MetWorkingUserAPI.Context
+namespace MetWorkingUserInfrastructure.Context
 {
     public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
     {
