@@ -27,9 +27,9 @@ namespace MetWorkingUserInfrastructure.Context
             new UserEntityTypeConfiguration().Configure(builder.Entity<User>());
         }
 
-        public Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            throw new System.NotImplementedException();
+            return await base.SaveChangesAsync();
         }
     }   
 }

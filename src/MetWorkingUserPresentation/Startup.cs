@@ -1,8 +1,5 @@
 using MetWorkingUserApplication;
-using MetWorkingUserApplication.Interfaces;
-using MetWorkingUserApplication.Services;
 using MetWorkingUserInfrastructure;
-using MetWorkingUserInfrastructure.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

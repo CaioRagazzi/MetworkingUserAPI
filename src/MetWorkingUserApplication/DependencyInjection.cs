@@ -1,5 +1,5 @@
-using MetWorkingUserApplication.Interfaces;
-using MetWorkingUserApplication.Services;
+using System.Reflection;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MetWorkingUserApplication
@@ -8,7 +8,7 @@ namespace MetWorkingUserApplication
     {
         public static void AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
         }  
     }   
 }
