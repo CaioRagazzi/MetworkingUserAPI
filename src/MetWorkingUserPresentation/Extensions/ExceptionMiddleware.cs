@@ -33,7 +33,7 @@ namespace MetWorkingUserPresentation.Extensions
             {
                 StatusCode = context.Response.StatusCode,
                 Message = exception.Message,
-                InnerMessage = exception.InnerException.Message
+                InnerMessage = exception.InnerException?.Message
             }.ToString());
         }
     }
