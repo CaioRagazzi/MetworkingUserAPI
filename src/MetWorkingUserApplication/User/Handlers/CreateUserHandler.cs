@@ -20,7 +20,7 @@ namespace MetWorkingUserApplication.Handlers
 
             request.User.Password = BCrypt.Net.BCrypt.HashPassword(request.User.Password);
 
-            await _applicationDbContext.SaveChangesAsync();
+            await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
             return request.User;
         }
