@@ -1,14 +1,16 @@
 using System;
 using MediatR;
+using MetWorkingUserApplication.Contracts.Request;
+using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.Commands
 {
-    public class CreateUserCommand : IRequest<User>
+    public class CreateUserCommand : IRequest<UserResponse>
     {
-        public User User { get; }   
+        public CreateUserRequest User { get; }   
 
-        public CreateUserCommand(User user)
+        public CreateUserCommand(CreateUserRequest user)
         {
             User = user;
         } 

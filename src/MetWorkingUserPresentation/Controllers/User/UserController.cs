@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using MetWorkingUserApplication.Commands;
+using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Queries;
-using MetWorkingUserDomain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MetWorkingUserPresentation.Controllers
@@ -21,7 +21,7 @@ namespace MetWorkingUserPresentation.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> Create([FromBody]User user)
+        public async Task<IActionResult> Create([FromBody]CreateUserRequest user)
         {
             var command = new CreateUserCommand(user);
             var result = await Mediator.Send(command);
