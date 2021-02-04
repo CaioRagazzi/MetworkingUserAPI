@@ -1,10 +1,10 @@
 using System;
 using MediatR;
-using MetWorkingUserDomain.Entities;
+using MetWorkingUserApplication.Contracts.Response;
 
 namespace MetWorkingUserApplication.Queries
 {
-    public class GetUserByIdQuery : IRequest<User>
+    public class GetUserByIdQuery : IRequest<UserResponse>
     {
         public Guid Id { get; }   
 

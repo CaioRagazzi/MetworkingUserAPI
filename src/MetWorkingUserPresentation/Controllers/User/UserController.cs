@@ -26,13 +26,22 @@ namespace MetWorkingUserPresentation.Controllers
             var command = new CreateUserCommand(user);
             var result = await Mediator.Send(command);
 
-            return Ok(result);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var command = new DeleteUserCommand(id);
+            var result = await Mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPut("")]
+        public async Task<IActionResult> Update(UpdateUserRequest user)
+        {
+            var command = new UpdateUserCommand(user);
             var result = await Mediator.Send(command);
 
             return Ok(result);

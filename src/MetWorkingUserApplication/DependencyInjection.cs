@@ -1,6 +1,8 @@
 using System.Reflection;
 using AutoMapper;
+using FluentValidation;
 using MediatR;
+using MetWorkingUserApplication.Common.PipelineBehaviors;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MetWorkingUserApplication
@@ -11,6 +13,8 @@ namespace MetWorkingUserApplication
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         }  
     }   
 }

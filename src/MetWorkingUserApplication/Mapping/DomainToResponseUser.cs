@@ -12,6 +12,8 @@ namespace MetWorkingUserApplication.Mapping
             CreateMap<User, UserResponse>();
             CreateMap<CreateUserRequest, User>()
                 .ForMember(dest => dest.Id, act => act.Ignore());
+            CreateMap<UpdateUserRequest, User>()
+                .ForMember(dest => dest.Password, act => act.Ignore());
         }
     }   
 }
