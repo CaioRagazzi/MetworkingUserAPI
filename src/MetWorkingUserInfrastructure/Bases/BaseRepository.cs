@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using MetWorkingUserApplication.Interfaces;
-using MetWorkingUserInfrastructure.Context;
+using MetWorkingUserInfrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace MetWorkingUserInfrastructure.Bases

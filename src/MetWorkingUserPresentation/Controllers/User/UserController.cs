@@ -5,7 +5,7 @@ using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Queries;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MetWorkingUserPresentation.Controllers
+namespace MetWorkingUserPresentation.Controllers.User
 {
     [ApiController]
     [Route("[controller]")]

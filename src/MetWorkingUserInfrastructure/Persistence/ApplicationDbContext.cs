@@ -2,9 +2,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserDomain.Entities;
+using MetWorkingUserInfrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace MetWorkingUserInfrastructure.Context
+namespace MetWorkingUserInfrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetWorkingUserApplication", "src\MetWorkingUserApplication\MetWorkingUserApplication.csproj", "{72D73637-8F68-43E8-90E2-5CFC13CBE40E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetWorkingUserDomain", "src\MetWorkingUserDomain\MetWorkingUserDomain.csproj", "{0D224DD4-8366-40EA-ABC5-2978C545A17A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetWorkingUserInfrastructure", "src\MetWorkingUserInfrastructure\MetWorkingUserInfrastructure.csproj", "{0751625A-531A-4247-A821-CDA8D68349EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetWorkingUserPresentation", "src\MetWorkingUserPresentation\MetWorkingUserPresentation.csproj", "{5C1EABF4-FF77-461C-B2FB-D7B4C2614FEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72D73637-8F68-43E8-90E2-5CFC13CBE40E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D73637-8F68-43E8-90E2-5CFC13CBE40E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D73637-8F68-43E8-90E2-5CFC13CBE40E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D73637-8F68-43E8-90E2-5CFC13CBE40E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D224DD4-8366-40EA-ABC5-2978C545A17A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D224DD4-8366-40EA-ABC5-2978C545A17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D224DD4-8366-40EA-ABC5-2978C545A17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D224DD4-8366-40EA-ABC5-2978C545A17A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0751625A-531A-4247-A821-CDA8D68349EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0751625A-531A-4247-A821-CDA8D68349EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0751625A-531A-4247-A821-CDA8D68349EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0751625A-531A-4247-A821-CDA8D68349EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C1EABF4-FF77-461C-B2FB-D7B4C2614FEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C1EABF4-FF77-461C-B2FB-D7B4C2614FEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C1EABF4-FF77-461C-B2FB-D7B4C2614FEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C1EABF4-FF77-461C-B2FB-D7B4C2614FEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
