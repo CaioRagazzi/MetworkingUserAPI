@@ -19,4 +19,11 @@
       <ProjectReference Include="..\..\src\MetWorkingUserPresentation\MetWorkingUserPresentation.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="appsettings.test.json" />
+      <EmbeddedResource Include="appsettings.test.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

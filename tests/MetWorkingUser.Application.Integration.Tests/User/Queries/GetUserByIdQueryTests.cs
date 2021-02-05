@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace MetWorkingUser.Application.Integration.Tests.User.Queries
 {
     using static Testing;
-    public class GetUserByIdQueryTests
+    public class GetUserByIdQueryTests: TestBase
     {
         [Test]
         public async Task ShouldReturnUserById()
@@ -26,6 +26,11 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Queries
             UserResponse result = await SendAsync(query);
 
             result.Should().NotBeNull();
+            result.Email.Should().BeOfType(typeof(string));
+            result.Email.Should().Be("ca.ragazzi@gmail.com");
+            result.Id.Should().Be(guid);
+            result.Name.Should().BeOfType(typeof(string));
+            result.Name.Should().Be("Caio Eduardo Ragazzi");
         } 
         
     }

@@ -4,10 +4,12 @@ using MediatR;
 using MetWorkingUserInfrastructure.Persistence;
 using MetWorkingUserPresentation;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
+using Respawn;
 
 namespace MetWorkingUser.Application.Integration.Tests
 {
@@ -16,17 +18,20 @@ namespace MetWorkingUser.Application.Integration.Tests
     {
         private static IConfigurationRoot _configuration;
         private static IServiceScopeFactory _scopeFactory;
+        private static IConfigurationBuilder _builder;
+        private static Checkpoint _checkpoint;
+        private static string _currentUserId;
 
         [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
+            var teste = Directory.GetCurrentDirectory();
+            _builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.test.json", true, true)
                 .AddEnvironmentVariables();
 
-            _configuration = builder.Build();
-            
+            _configuration = _builder.Build();
+
             var startup = new Startup(_configuration);
 
             var services = new ServiceCollection();
@@ -38,6 +43,34 @@ namespace MetWorkingUser.Application.Integration.Tests
             startup.ConfigureServices(services);
 
             _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
+
+            _checkpoint = new Checkpoint
+            {
+                
+                TablesToIgnore = new[] { "__EFMigrationsHistory" },
+                DbAdapter = DbAdapter.MySql,
+            };
+            
+            EnsureDatabase();
+        }
+        
+        private static void EnsureDatabase()
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+
+            context.Database.Migrate();
+        }
+        
+        public static async Task ResetState()
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+            await context.Database.GetDbConnection().OpenAsync();
+            await _checkpoint.Reset(context.Database.GetDbConnection());
+            _currentUserId = null;
         }
 
         public static async Task AddAsync<TEntity>(TEntity entity) where TEntity : class

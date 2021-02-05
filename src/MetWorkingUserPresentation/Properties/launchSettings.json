@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "MetWorkingUserAPI": {
+    "MetWorkingUserPresentation": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
