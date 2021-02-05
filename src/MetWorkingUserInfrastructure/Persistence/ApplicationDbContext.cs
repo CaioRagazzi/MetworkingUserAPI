@@ -14,15 +14,6 @@ namespace MetWorkingUserInfrastructure.Persistence
         : base(options)
         {
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql(
-                "server=172.17.0.2;database=metworkingusers;user=root;password=password",
-                b => b.MigrationsAssembly("MetWorkingUserPresentation")
-            );
-        }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             new UserEntityTypeConfiguration().Configure(builder.Entity<User>());
