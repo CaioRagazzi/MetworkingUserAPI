@@ -7,11 +7,11 @@ namespace MetWorkingUserApplication.Commands
 {
     public class UpdateUserCommand : IRequest<UserResponse>
     {
-        public UpdateUserRequest User { get; }
+        public UpdateUserRequest UserUpdateRequest { get; }
 
         public UpdateUserCommand(UpdateUserRequest user)
         {
-            User = user;
+            UserUpdateRequest = user;
         } 
         
     }

@@ -5,31 +5,29 @@ using MetWorkingUserApplication.Interfaces;
 
 namespace MetWorkingUserApplication.Validation
 {
-    public class CreateUserRequestValidation : AbstractValidator<CreateUserCommand>
+    public class UpdateUserRequestValidation : AbstractValidator<UpdateUserCommand>
     {
         private readonly IApplicationDbContext _applicationDbContext;
-        public CreateUserRequestValidation(IApplicationDbContext _applicationDbContext)
+        
+        public UpdateUserRequestValidation(IApplicationDbContext _applicationDbContext)
         {            
-            RuleFor(x => x.UserRequest.Email)
+            RuleFor(x => x.UserUpdateRequest.Email)
                 .NotEmpty()
                 .EmailAddress();
 
-            RuleFor(x => x.UserRequest.Name)
+            RuleFor(x => x.UserUpdateRequest.Name)
                 .NotEmpty()
                 .MinimumLength(3);
 
-            RuleFor(x => x.UserRequest.Password)
-                .NotEmpty()
-                .MinimumLength(6);
-
-            RuleFor(x => x.UserRequest.Email)
+            RuleFor(x => x.UserUpdateRequest.Email)
                 .Must((createUserCommand, cancellation) => {
                     var exists = _applicationDbContext.Users.Where(
-                        entity => entity.Email == createUserCommand.UserRequest.Email).ToList();
+                        entity => entity.Email == createUserCommand.UserUpdateRequest.Email).ToList();
 
                     return !exists.Any();
                 })
                 .WithMessage("Already exists");
         }
+        
     }
 }

@@ -21,7 +21,7 @@ namespace MetWorkingUserApplication.Handlers
         }
         public async Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var userRequest = _mapper.Map<User>(request.User);
+            var userRequest = _mapper.Map<User>(request.UserUpdateRequest);
 
             var user = await _applicationDbContext.Users.FindAsync(userRequest.Id);
 

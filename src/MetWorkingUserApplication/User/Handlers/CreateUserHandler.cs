@@ -20,10 +20,10 @@ namespace MetWorkingUserApplication.Handlers
         }
         public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _mapper.Map<User>(request.User);
+            var user = _mapper.Map<User>(request.UserRequest);
             await _applicationDbContext.Users.AddAsync(user, cancellationToken);
 
-            user.Password = BCrypt.Net.BCrypt.HashPassword(request.User.Password);
+            user.Password = BCrypt.Net.BCrypt.HashPassword(request.UserRequest.Password);
 
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 

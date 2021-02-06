@@ -8,11 +8,11 @@ namespace MetWorkingUserApplication.Commands
 {
     public class CreateUserCommand : IRequest<UserResponse>
     {
-        public CreateUserRequest User { get; }   
+        public CreateUserRequest UserRequest { get; }   
 
-        public CreateUserCommand(CreateUserRequest user)
+        public CreateUserCommand(CreateUserRequest userRequest)
         {
-            User = user;
+            UserRequest = userRequest;
         } 
         
     }

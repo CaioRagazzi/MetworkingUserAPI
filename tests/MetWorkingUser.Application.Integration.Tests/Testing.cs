@@ -95,5 +95,15 @@ namespace MetWorkingUser.Application.Integration.Tests
 
             return await mediator.Send(request);
         }
+        
+        public static async Task<TEntity> FindAsync<TEntity>(params object[] keyValues)
+            where TEntity : class
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+
+            return await context.FindAsync<TEntity>(keyValues);
+        }
     }
 }
