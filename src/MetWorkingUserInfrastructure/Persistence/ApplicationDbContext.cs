@@ -17,6 +17,7 @@ namespace MetWorkingUserInfrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
             new UserEntityTypeConfiguration().Configure(builder.Entity<User>());
+            new InterestEntityTypeConfiguration().Configure(builder.Entity<Interest>());
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
