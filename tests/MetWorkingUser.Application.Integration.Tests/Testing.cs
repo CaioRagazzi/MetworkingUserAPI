@@ -49,6 +49,7 @@ namespace MetWorkingUser.Application.Integration.Tests
                 
                 TablesToIgnore = new[] { "__EFMigrationsHistory" },
                 DbAdapter = DbAdapter.MySql,
+                SchemasToInclude = new []{ "metworkingusertest" }
             };
             
             EnsureDatabase();

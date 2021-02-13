@@ -2,7 +2,7 @@ using MetWorkingUserDomain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MetWorkingUserInfrastructure.Context
+namespace MetWorkingUserInfrastructure.Persistence.configurations
 {
     public class InterestEntityTypeConfiguration : IEntityTypeConfiguration<Interest>
     {

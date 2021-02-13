@@ -24,14 +24,10 @@ namespace MetWorkingUserInfrastructure.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -45,25 +41,47 @@ namespace MetWorkingUserInfrastructure.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MetWorkingUserDomain.Entities.UserInterests", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("InterestId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("UserId", "InterestId");
+
+                    b.HasIndex("InterestId");
+
+                    b.ToTable("UserInterests");
+                });
+
+            modelBuilder.Entity("MetWorkingUserDomain.Entities.UserInterests", b =>
+                {
+                    b.HasOne("MetWorkingUserDomain.Entities.Interest", "Interest")
+                        .WithMany("User")
+                        .HasForeignKey("InterestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MetWorkingUserDomain.Entities.User", "User")
+                        .WithMany("Interest")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

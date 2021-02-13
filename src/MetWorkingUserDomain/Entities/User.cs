@@ -1,5 +1,5 @@
 using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using MetWorkingUserDomain.Interfaces;
 
 namespace MetWorkingUserDomain.Entities
@@ -8,10 +8,8 @@ namespace MetWorkingUserDomain.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        [MaxLength(255)]
-        [EmailAddress]
         public string Email { get; set; }
-        [MinLength(6)]
         public string Password { get; set; }
+        public IList<UserInterests> Interest { get; set; }
     }   
 }

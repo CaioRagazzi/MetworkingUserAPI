@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using MetWorkingUserApplication;
 using MetWorkingUserInfrastructure;
 using MetWorkingUserPresentation.Extensions;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace MetWorkingUserPresentation
 {
@@ -24,7 +26,8 @@ namespace MetWorkingUserPresentation
         {
             services.AddInfrastructure(Configuration);
             services.AddApplication();
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MetWorkingUserAPI", Version = "v1" });
