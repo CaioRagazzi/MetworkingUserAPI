@@ -24,4 +24,4 @@ RUN dotnet publish "MetWorkingUserPresentation.csproj" -c Release -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MetWorkingUserPresentation.dll", "--server.urls", "http://0.0.0.0:5000"]
+ENTRYPOINT ["dotnet", "MetWorkingUserPresentation.dll"]
