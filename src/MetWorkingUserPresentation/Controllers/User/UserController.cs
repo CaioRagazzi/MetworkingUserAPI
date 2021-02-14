@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Request;
@@ -52,9 +53,10 @@ namespace MetWorkingUserPresentation.Controllers.User
             var command = new AuthenticateUserCommand(user);
             var result = await Mediator.Send(command);
 
-            if (result) return Ok();
-
-            return Unauthorized();
+            if (result.Errors.Any()) return BadRequest(result);
+            if (result.IsForbbiden) return Unauthorized(result);
+            
+            return Ok(result);
         }
         
     }

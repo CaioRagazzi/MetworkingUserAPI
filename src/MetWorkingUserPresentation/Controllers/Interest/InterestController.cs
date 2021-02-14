@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using MetWorkingUserApplication.Contracts.Request;
@@ -24,6 +25,11 @@ namespace MetWorkingUserPresentation.Controllers.Interest
         {
             var query = new GetAllInterestQuery();
             var result = await Mediator.Send(query);
+
+            if (result.Errors.Any())
+            {
+                return BadRequest(result.Errors);
+            }
 
             return Ok(result);
         }
