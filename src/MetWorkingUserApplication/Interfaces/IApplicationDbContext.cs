@@ -7,7 +7,7 @@ namespace MetWorkingUserApplication.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<User> Users { get; set; }
+        DbSet<MetWorkingUserDomain.Entities.User> Users { get; set; }
         DbSet<MetWorkingUserDomain.Entities.Interest> Interest { get; set; }
         DbSet<UserInterests> UserInterests { get; set; }
 

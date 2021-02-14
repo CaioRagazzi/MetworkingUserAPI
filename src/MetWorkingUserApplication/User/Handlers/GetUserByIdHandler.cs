@@ -5,9 +5,8 @@ using MediatR;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserApplication.Queries;
-using MetWorkingUserDomain.Entities;
 
-namespace MetWorkingUserApplication.Handlers
+namespace MetWorkingUserApplication.User.Handlers
 {
     public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, UserResponse>
     {

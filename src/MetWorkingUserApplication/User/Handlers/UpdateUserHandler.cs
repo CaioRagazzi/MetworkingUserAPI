@@ -6,9 +6,8 @@ using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Common.Exceptions;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
-using MetWorkingUserDomain.Entities;
 
-namespace MetWorkingUserApplication.Handlers
+namespace MetWorkingUserApplication.User.Handlers
 {
     public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UserResponse>
     {
@@ -21,7 +20,7 @@ namespace MetWorkingUserApplication.Handlers
         }
         public async Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var userRequest = _mapper.Map<User>(request.UserUpdateRequest);
+            var userRequest = _mapper.Map<MetWorkingUserDomain.Entities.User>(request.UserUpdateRequest);
 
             var user = await _applicationDbContext.Users.FindAsync(userRequest.Id);
 

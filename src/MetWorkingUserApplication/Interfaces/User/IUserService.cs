@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using MetWorkingUserDomain.Entities;
 
-namespace MetWorkingUserApplication.Interfaces
+namespace MetWorkingUserApplication.Interfaces.User
 {
     public interface IUserService
     {
-        Task<User> GetById(int id);
-        Task<User> Create(User user);
+        Task<MetWorkingUserDomain.Entities.User> GetById(int id);
+        
+        Task<MetWorkingUserDomain.Entities.User> Create(MetWorkingUserDomain.Entities.User user);
     }   
 }

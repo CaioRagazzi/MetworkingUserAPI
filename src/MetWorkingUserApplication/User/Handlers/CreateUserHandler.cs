@@ -5,9 +5,8 @@ using MediatR;
 using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
-using MetWorkingUserDomain.Entities;
 
-namespace MetWorkingUserApplication.Handlers
+namespace MetWorkingUserApplication.User.Handlers
 {
     public class CreateUserHandler : IRequestHandler<CreateUserCommand, UserResponse>
     {
@@ -20,7 +19,7 @@ namespace MetWorkingUserApplication.Handlers
         }
         public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _mapper.Map<User>(request.UserRequest);
+            var user = _mapper.Map<MetWorkingUserDomain.Entities.User>(request.UserRequest);
             await _applicationDbContext.Users.AddAsync(user, cancellationToken);
 
             user.Password = BCrypt.Net.BCrypt.HashPassword(request.UserRequest.Password);

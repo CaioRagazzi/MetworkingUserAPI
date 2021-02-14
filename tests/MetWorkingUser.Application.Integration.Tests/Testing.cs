@@ -20,7 +20,6 @@ namespace MetWorkingUser.Application.Integration.Tests
         private static IServiceScopeFactory _scopeFactory;
         private static IConfigurationBuilder _builder;
         private static Checkpoint _checkpoint;
-        private static string _currentUserId;
 
         [OneTimeSetUp]
         public void RunBeforeAnyTests()
@@ -71,7 +70,6 @@ namespace MetWorkingUser.Application.Integration.Tests
             var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
             await context.Database.GetDbConnection().OpenAsync();
             await _checkpoint.Reset(context.Database.GetDbConnection());
-            _currentUserId = null;
         }
 
         public static async Task AddAsync<TEntity>(TEntity entity) where TEntity : class

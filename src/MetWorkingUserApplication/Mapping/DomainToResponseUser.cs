@@ -9,16 +9,16 @@ namespace MetWorkingUserApplication.Mapping
     {
         public DomainToResponseUser()
         {
-            CreateMap<User, UserResponse>();
-            CreateMap<CreateUserRequest, User>()
+            CreateMap<MetWorkingUserDomain.Entities.User, UserResponse>();
+            CreateMap<CreateUserRequest, MetWorkingUserDomain.Entities.User>()
                 .ForMember(dest => dest.Id, act => act.Ignore());
-            CreateMap<UpdateUserRequest, User>()
+            CreateMap<UpdateUserRequest, MetWorkingUserDomain.Entities.User>()
                 .ForMember(dest => dest.Password, act => act.Ignore());
 
             CreateMap<MetWorkingUserDomain.Entities.Interest, InterestResponse>();
             CreateMap<CreateInterestRequest, MetWorkingUserDomain.Entities.Interest>();
             CreateMap<UpdateInterestRequest, MetWorkingUserDomain.Entities.Interest>();
-            CreateMap<User, UserInterestResponse>();
+            CreateMap<MetWorkingUserDomain.Entities.User, UserInterestResponse>();
         }
     }   
 }

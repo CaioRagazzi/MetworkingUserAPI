@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Queries;
+using MetWorkingUserApplication.User.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MetWorkingUserPresentation.Controllers.User
@@ -43,6 +44,17 @@ namespace MetWorkingUserPresentation.Controllers.User
             var result = await Mediator.Send(command);
 
             return Ok(result);
+        }
+        
+        [HttpPost("Authenticate")]
+        public async Task<IActionResult> Create([FromBody]AuthenticateUserRequest user)
+        {
+            var command = new AuthenticateUserCommand(user);
+            var result = await Mediator.Send(command);
+
+            if (result) return Ok();
+
+            return Unauthorized();
         }
         
     }
