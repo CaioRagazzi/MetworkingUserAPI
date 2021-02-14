@@ -10,7 +10,7 @@ namespace MetWorkingUserPresentation.Controllers.UserInterest
 {
     public class UserInterestController : ApiControllerBase
     {
-        [HttpGet("user/{userId}")]
+        [HttpGet("User/{userId}")]
         public async Task<IActionResult> GetByUserId(Guid userId)
         {
             var query = new GetUserInterestByUserIdQuery(userId);
@@ -28,7 +28,7 @@ namespace MetWorkingUserPresentation.Controllers.UserInterest
             return CreatedAtAction(nameof(GetByUserId), new { userId = result.UserId }, Unit.Value);
         }
 
-        [HttpDelete("user/{userId}/interest/{interestId}")]
+        [HttpDelete("User/{userId}/Interest/{interestId}")]
         public async Task<IActionResult> DeleteById(Guid userId, Guid interestId)
         {
             var command = new DeleteUserInterestByIdCommand(userId, interestId);
