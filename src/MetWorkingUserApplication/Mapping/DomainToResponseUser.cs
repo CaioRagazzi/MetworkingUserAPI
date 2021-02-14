@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Contracts.Response;
@@ -20,9 +18,7 @@ namespace MetWorkingUserApplication.Mapping
             CreateMap<MetWorkingUserDomain.Entities.Interest, InterestResponse>();
             CreateMap<CreateInterestRequest, MetWorkingUserDomain.Entities.Interest>();
             CreateMap<UpdateInterestRequest, MetWorkingUserDomain.Entities.Interest>();
-            CreateMap<UserInterestRequest, UserInterests>();
             CreateMap<User, UserInterestResponse>();
-                // .ForMember(dest => dest.Interest.FirstOrDefault().Interest, act => act.Ignore());
         }
     }   
 }

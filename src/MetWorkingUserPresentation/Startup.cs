@@ -26,8 +26,7 @@ namespace MetWorkingUserPresentation
         {
             services.AddInfrastructure(Configuration);
             services.AddApplication();
-            services.AddControllers()
-                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MetWorkingUserAPI", Version = "v1" });

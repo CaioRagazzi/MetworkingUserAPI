@@ -19,6 +19,15 @@ namespace MetWorkingUserPresentation.Controllers.Interest
             return Ok(result);
         }
         
+        [HttpGet("")]
+        public async Task<IActionResult> GetAll()
+        {
+            var query = new GetAllInterestQuery();
+            var result = await Mediator.Send(query);
+
+            return Ok(result);
+        }
+        
         [HttpPost("")]
         public async Task<IActionResult> Create([FromBody]CreateInterestRequest interest)
         {
@@ -34,7 +43,7 @@ namespace MetWorkingUserPresentation.Controllers.Interest
             var command = new DeleteInterestCommand(id);
             var result = await Mediator.Send(command);
 
-            return Ok(result);
+            return NoContent();
         }
         
         [HttpPut("")]

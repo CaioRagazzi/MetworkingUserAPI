@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using MetWorkingUserApplication.Common.Exceptions;
 using MetWorkingUserApplication.Interfaces;
@@ -9,32 +8,36 @@ using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.UserInterest.Handlers
 {
-    public class CreateUserInterestHandler : IRequestHandler<CreateUserInterestCommand>
+    public class CreateUserInterestHandler : IRequestHandler<CreateUserInterestCommand, UserInterests>
     {
         private readonly IApplicationDbContext _applicationDbContext;
-        private readonly IMapper _mapper;
-        public CreateUserInterestHandler(IApplicationDbContext context, IMapper mapper)
+        public CreateUserInterestHandler(IApplicationDbContext context)
         {
             _applicationDbContext = context;
-            _mapper = mapper;
         }
         
-        public async Task<Unit> Handle(CreateUserInterestCommand request, CancellationToken cancellationToken)
+        public async Task<UserInterests> Handle(CreateUserInterestCommand request, CancellationToken cancellationToken)
         {
-            var interest = await _applicationDbContext.Interest.FindAsync(request.UserInterestRequest.InterestId);
-            var user = await _applicationDbContext.Users.FindAsync(request.UserInterestRequest.UserId);
+            var interest = await _applicationDbContext.Interest.FindAsync(request.InterestId);
+            var user = await _applicationDbContext.Users.FindAsync(request.UserId);
 
             if (interest == null || user == null)
             {
                 throw new NotFoundException();
             }
 
-            var userInterests = _mapper.Map<UserInterests>(request.UserInterestRequest);
+            var userInterests = new UserInterests()
+            {
+                Interest = interest,
+                User = user,
+                InterestId = request.InterestId,
+                UserId = request.UserId
+            };
 
-            await _applicationDbContext.UserInterests.AddAsync(userInterests);
+            await _applicationDbContext.UserInterests.AddAsync(userInterests, cancellationToken);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
             
-            return Unit.Value;
+            return userInterests;
         }
     }
 }

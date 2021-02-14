@@ -1,13 +1,11 @@
 using System;
 using MediatR;
-using MetWorkingUserApplication.Contracts.Request;
-using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.UserInterest.Commands
 {
-    public class CreateUserInterestCommand : IRequest<UserInterests>
+    public class DeleteUserInterestByIdCommand : IRequest
     {
-        public CreateUserInterestCommand(Guid userId, Guid interestId)
+        public DeleteUserInterestByIdCommand(Guid userId, Guid interestId)
         {
             UserId = userId;
             InterestId = interestId;
@@ -15,5 +13,6 @@ namespace MetWorkingUserApplication.UserInterest.Commands
 
         public Guid UserId { get; set; }
         public Guid InterestId { get; set; }
+        
     }
 }
