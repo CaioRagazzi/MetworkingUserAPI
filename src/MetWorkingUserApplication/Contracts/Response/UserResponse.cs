@@ -11,6 +11,5 @@ namespace MetWorkingUserApplication.Contracts.Response
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public IList<MetWorkingUserDomain.Entities.Interest> Interest { get; set; }
     }   
 }

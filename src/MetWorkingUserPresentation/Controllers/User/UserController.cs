@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MetWorkingUserPresentation.Controllers.User
 {
-    [ApiController]
-    [Route("[controller]")]
     public class UserController : ApiControllerBase
     {
         [HttpGet("{id}")]
