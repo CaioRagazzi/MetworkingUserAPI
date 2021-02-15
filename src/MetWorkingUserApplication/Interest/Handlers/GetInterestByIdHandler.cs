@@ -2,14 +2,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using MetWorkingUserApplication.Common.Exceptions;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interest.Queries;
 using MetWorkingUserApplication.Interfaces;
 
 namespace MetWorkingUserApplication.Interest.Handlers
 {
-    public class GetInterestByIdHandler: IRequestHandler<GetInterestByIdQuery, InterestResponse>
+    public class GetInterestByIdHandler: IRequestHandler<GetInterestByIdQuery, BaseResponse<InterestResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
@@ -20,16 +19,21 @@ namespace MetWorkingUserApplication.Interest.Handlers
             _mapper = mapper;
         }
         
-        public async Task<InterestResponse> Handle(GetInterestByIdQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<InterestResponse>> Handle(GetInterestByIdQuery request, CancellationToken cancellationToken)
         {
             var interest = await _applicationDbContext.Interest.FindAsync(request.Id);
 
+            var response = new BaseResponse<InterestResponse>();
             if (interest == null)
             {
-                throw new NotFoundException();
+                response.SetValidationErrors(new []{"Interest not found!"});
+                return response;
             }
 
-            return _mapper.Map<InterestResponse>(interest);
+            var interestResponse = _mapper.Map<InterestResponse>(interest);
+            response.SetIsOk(interestResponse);
+
+            return response;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
@@ -6,11 +7,13 @@ using System.Threading;
 using System.Linq;
 using FluentValidation.Results;
 using MetWorkingUserApplication.Contracts.Response;
+using MetWorkingUserApplication.Interfaces;
 
 namespace MetWorkingUserApplication.Common.PipelineBehaviors
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse> where TResponse : BaseResponse<string>
+        where TRequest : IRequest<TResponse>
+        where TResponse: class
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -18,7 +21,7 @@ namespace MetWorkingUserApplication.Common.PipelineBehaviors
         {
             _validators = validators;
         }
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var context = new ValidationContext<TRequest>(request);
             var failures = _validators
@@ -29,24 +32,16 @@ namespace MetWorkingUserApplication.Common.PipelineBehaviors
 
             if (failures.Any())
             {
-                var teste = Errors(failures);
-                return teste;
+                var responseType = typeof(TResponse);
+                var resultType = responseType.GetGenericArguments()[0];
+                var baseResponseType = typeof(BaseResponse<>).MakeGenericType(resultType);
+
+                var invalidResponse = Activator.CreateInstance(baseResponseType, null, failures) as TResponse;
+
+                return invalidResponse;
             }
 
-            return next();
-        }
-        
-        private static Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
-        {
-            var response = new BaseResponse<string>();
-
-            foreach (var failure in failures)
-            {
-                response.Errors.Add(failure.ErrorMessage);
-                response.IsOk = false;
-                response.Data = "";
-            }
-            return Task.FromResult(response as TResponse);
+            return await next();
         }
     }
 }

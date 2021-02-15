@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FluentValidation;
@@ -24,11 +25,11 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
             
             var result = await SendAsync(command);
 
-            result.Email.Should().BeOfType(typeof(string));
-            result.Email.Should().Be(createUserRequest.Email);
-            result.Id.Should().NotBeEmpty();
-            result.Name.Should().BeOfType(typeof(string));
-            result.Name.Should().Be(createUserRequest.Name);
+            result.Data.Email.Should().BeOfType(typeof(string));
+            result.Data.Email.Should().Be(createUserRequest.Email);
+            result.Data.Id.Should().NotBeEmpty();
+            result.Data.Name.Should().BeOfType(typeof(string));
+            result.Data.Name.Should().Be(createUserRequest.Name);
         }
 
         [Test]
@@ -42,10 +43,12 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
             };
             
             var command = new CreateUserCommand(createUserRequest);
+            var result = await SendAsync(command);
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
-                .WithMessage("Validation failed: \n -- UserRequest.Email: 'User Request. Email' is not a valid email address.");
+            result.Errors.Should().NotBe(null);
+            result.Errors.data.Should().Contain("'User Request. Email' is not a valid email address.");
+            result.IsOk.Should().BeFalse();
+            result.Data.Should().BeNull();
         }
         
         [Test]
@@ -59,16 +62,17 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
             };
             
             var command = new CreateUserCommand(createUserRequest);
+            var result = await SendAsync(command);
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
-                    .WithMessage("Validation failed: \n -- UserRequest.Email: 'User Request. Email' must not be empty.\n -- UserRequest.Email: 'User Request. Email' is not a valid email address.");
+            result.Errors.Should().NotBe(null);
+            result.Errors.data.Should().Contain("'User Request. Email' must not be empty.");
+            result.Errors.data.Should().Contain("'User Request. Email' is not a valid email address.");
+            result.IsOk.Should().BeFalse();
+            result.Data.Should().BeNull();
         }
         
         [Test]
         [TestCase("123", "ca.ragazzi2@gmail.com")]
-        [TestCase("1234", "ca.ragazzi1@gmail.com")]
-        [TestCase("12345", "ca.ragazzi3@gmail.com")]
         public async Task ShoudlReturnPasswordMinLengthError(string password, string email)
         {
             var createUserRequest = new CreateUserRequest
@@ -79,10 +83,12 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
             };
             
             var command = new CreateUserCommand(createUserRequest);
+            var result = await SendAsync(command);
 
-            FluentActions.Invoking(() =>
-                    SendAsync(command)).Should().Throw<ValidationException>()
-                .WithMessage($"Validation failed: \n -- UserRequest.Password: The length of 'User Request. Password' must be at least 6 characters. You entered {password.Length} characters.");
+            result.Errors.Should().NotBe(null);
+            result.Errors.data.Should().Contain($"The length of 'User Request. Password' must be at least 6 characters. You entered {password.Length} characters.");
+            result.IsOk.Should().BeFalse();
+            result.Data.Should().BeNull();
         }
         
         [Test]
@@ -96,10 +102,13 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
             };
             
             var command = new CreateUserCommand(createUserRequest);
+            var result = await SendAsync(command);
 
-            FluentActions.Invoking(() =>
-                    SendAsync(command)).Should().Throw<ValidationException>()
-                .WithMessage("Validation failed: \n -- UserRequest.Password: 'User Request. Password' must not be empty.\n -- UserRequest.Password: The length of 'User Request. Password' must be at least 6 characters. You entered 0 characters.");
+            result.Errors.Should().NotBe(null);
+            result.Errors.data.Should().Contain("'User Request. Password' must not be empty.");
+            result.Errors.data.Should().Contain("The length of 'User Request. Password' must be at least 6 characters. You entered 0 characters.");
+            result.IsOk.Should().BeFalse();
+            result.Data.Should().BeNull();
         }
         
         [Test]
@@ -111,13 +120,15 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
                 Name = "Caio Eduardo Ragazzi Gemignani",
                 Password = "123123"
             };
-            
             var command = new CreateUserCommand(createUserRequest);
+            
             await SendAsync(command);
+            var result = await SendAsync(command);
 
-            FluentActions.Invoking(() =>
-                    SendAsync(command)).Should().Throw<ValidationException>()
-                .WithMessage("Validation failed: \n -- UserRequest.Email: Already exists");
+            result.Errors.Should().NotBe(null);
+            result.Errors.data.Should().Contain("Already exists");
+            result.IsOk.Should().BeFalse();
+            result.Data.Should().BeNull();
         }
     }
 }

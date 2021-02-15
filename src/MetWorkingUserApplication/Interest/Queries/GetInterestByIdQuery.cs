@@ -4,7 +4,7 @@ using MetWorkingUserApplication.Contracts.Response;
 
 namespace MetWorkingUserApplication.Interest.Queries
 {
-    public class GetInterestByIdQuery: IRequest<InterestResponse>
+    public class GetInterestByIdQuery: IRequest<BaseResponse<InterestResponse>>
     {
         public Guid Id { get; }
 

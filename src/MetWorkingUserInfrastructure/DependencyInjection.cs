@@ -1,4 +1,3 @@
-using System;
 using MetWorkingUserApplication.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MetWorkingUserInfrastructure.Persistence;

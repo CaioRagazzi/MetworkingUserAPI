@@ -1,14 +1,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using MetWorkingUserApplication.Common.Exceptions;
+using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserApplication.UserInterest.Commands;
 using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.UserInterest.Handlers
 {
-    public class CreateUserInterestHandler : IRequestHandler<CreateUserInterestCommand, UserInterests>
+    public class CreateUserInterestHandler : IRequestHandler<CreateUserInterestCommand, BaseResponse<UserInterests>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         public CreateUserInterestHandler(IApplicationDbContext context)
@@ -16,14 +16,16 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
             _applicationDbContext = context;
         }
         
-        public async Task<UserInterests> Handle(CreateUserInterestCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<UserInterests>> Handle(CreateUserInterestCommand request, CancellationToken cancellationToken)
         {
             var interest = await _applicationDbContext.Interest.FindAsync(request.InterestId);
             var user = await _applicationDbContext.Users.FindAsync(request.UserId);
 
+            var response = new BaseResponse<UserInterests>();
             if (interest == null || user == null)
             {
-                throw new NotFoundException();
+                response.SetValidationErrors(new []{"Interest not found!"});
+                return response;
             }
 
             var userInterests = new UserInterests()
@@ -36,8 +38,8 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
 
             await _applicationDbContext.UserInterests.AddAsync(userInterests, cancellationToken);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
-            
-            return userInterests;
+            response.SetIsOk(userInterests);
+            return response;
         }
     }
 }

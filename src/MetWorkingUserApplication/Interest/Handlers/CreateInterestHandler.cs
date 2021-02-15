@@ -8,7 +8,7 @@ using MetWorkingUserApplication.Interfaces;
 
 namespace MetWorkingUserApplication.Interest.Handlers
 {
-    public class CreateInterestHandler : IRequestHandler<CreateInterestCommand, InterestResponse>
+    public class CreateInterestHandler : IRequestHandler<CreateInterestCommand, BaseResponse<InterestResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
@@ -19,14 +19,18 @@ namespace MetWorkingUserApplication.Interest.Handlers
             _mapper = mapper;    
         }
         
-        public async Task<InterestResponse> Handle(CreateInterestCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<InterestResponse>> Handle(CreateInterestCommand request, CancellationToken cancellationToken)
         {
             var interest = _mapper.Map<MetWorkingUserDomain.Entities.Interest>(request.CreateInterestRequest);
 
             await _applicationDbContext.Interest.AddAsync(interest);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<InterestResponse>(interest);
+            var interestResponse = _mapper.Map<InterestResponse>(interest);
+            var response = new BaseResponse<InterestResponse>();
+            response.SetIsOk(interestResponse);
+
+            return response;
         }
     }
 }

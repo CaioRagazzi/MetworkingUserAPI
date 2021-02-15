@@ -8,7 +8,7 @@ using MetWorkingUserApplication.Queries;
 
 namespace MetWorkingUserApplication.User.Handlers
 {
-    public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, UserResponse>
+    public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, BaseResponse<UserResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
@@ -18,11 +18,15 @@ namespace MetWorkingUserApplication.User.Handlers
             _mapper = mapper;
         }
 
-        public async Task<UserResponse> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<UserResponse>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _applicationDbContext.Users.FindAsync(request.Id);
+            var users = await _applicationDbContext.Users.FindAsync(request.Id);
+            
+            var userResponse = _mapper.Map<UserResponse>(users);
+            var response = new BaseResponse<UserResponse>();
+            response.SetIsOk(userResponse);
 
-            return _mapper.Map<UserResponse>(user);
+            return response;
         }
     }
 }

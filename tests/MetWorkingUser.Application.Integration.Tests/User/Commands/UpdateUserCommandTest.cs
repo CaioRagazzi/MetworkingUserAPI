@@ -48,11 +48,11 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
         }
         
         [Test]
-        [TestCase("ca.ragazzigmail.com", "Caio Ragazzi Updated", "Validation failed: \n -- UserUpdateRequest.Email: 'User Update Request. Email' is not a valid email address.")]
-        [TestCase("", "Caio Ragazzi Updated", "Validation failed: \n -- UserUpdateRequest.Email: 'User Update Request. Email' must not be empty.\n -- UserUpdateRequest.Email: 'User Update Request. Email' is not a valid email address.")]
-        [TestCase("ca.ragazziupdated@gmail.com", "Ca", "Validation failed: \n -- UserUpdateRequest.Name: The length of 'User Update Request. Name' must be at least 3 characters. You entered 2 characters.")]
-        [TestCase("ca.ragazzi@gmail.com", "Caio Ragazzi Updated", "Validation failed: \n -- UserUpdateRequest.Email: Already exists")]
-        public async Task ShouldReturnError(string email, string name, string errorMessage)
+        [TestCase("ca.ragazzigmail.com", "Caio Ragazzi Updated", new string[]{"'User Update Request. Email' is not a valid email address."})]
+        [TestCase("", "Caio Ragazzi Updated", new string[]{"'User Update Request. Email' must not be empty.", "'User Update Request. Email' is not a valid email address."})]
+        [TestCase("ca.ragazziupdated@gmail.com", "Ca", new string[]{"The length of 'User Update Request. Name' must be at least 3 characters. You entered 2 characters."})]
+        [TestCase("ca.ragazzi@gmail.com", "Caio Ragazzi Updated", new string[]{"Already exists"})]
+        public async Task ShouldReturnError(string email, string name, string[] errorMessage)
         {
             var guid = Guid.NewGuid();
             var user = new MetWorkingUserDomain.Entities.User
@@ -74,9 +74,15 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
             
             var command = new UpdateUserCommand(updateUserRequest);
         
-            FluentActions.Invoking(() =>
-                    SendAsync(command)).Should().Throw<ValidationException>()
-                .WithMessage(errorMessage);
+            var result = await SendAsync(command);
+
+            result.Errors.Should().NotBe(null);
+            foreach (var message in errorMessage)
+            {
+                result.Errors.data.Should().ContainMatch(message);
+            }
+            result.IsOk.Should().BeFalse();
+            result.Data.Should().BeNull();
         }
         
         [Test]
@@ -102,9 +108,12 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
             
             var command = new UpdateUserCommand(updateUserRequest);
         
-            FluentActions.Invoking(() =>
-                    SendAsync(command)).Should().Throw<NotFoundException>()
-                .WithMessage("Exception of type 'MetWorkingUserApplication.Common.Exceptions.NotFoundException' was thrown.");
+            var result = await SendAsync(command);
+
+            result.Errors.Should().NotBe(null);
+            result.Errors.data.Should().Contain("User Not Found!");
+            result.IsOk.Should().BeFalse();
+            result.Data.Should().BeNull();
         }
     }
 }

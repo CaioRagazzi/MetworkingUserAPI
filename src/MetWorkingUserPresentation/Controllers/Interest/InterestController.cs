@@ -1,7 +1,5 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
 using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Interest.Commands;
 using MetWorkingUserApplication.Interest.Queries;
@@ -17,7 +15,7 @@ namespace MetWorkingUserPresentation.Controllers.Interest
             var query = new GetInterestByIdQuery(id);
             var result = await Mediator.Send(query);
 
-            return Ok(result);
+            return await ResponseBase(result);
         }
         
         [HttpGet("")]
@@ -26,12 +24,7 @@ namespace MetWorkingUserPresentation.Controllers.Interest
             var query = new GetAllInterestQuery();
             var result = await Mediator.Send(query);
 
-            if (result.Errors.Any())
-            {
-                return BadRequest(result.Errors);
-            }
-
-            return Ok(result);
+            return await ResponseBase(result);
         }
         
         [HttpPost("")]
@@ -40,7 +33,7 @@ namespace MetWorkingUserPresentation.Controllers.Interest
             var command = new CreateInterestCommand(interest);
             var result = await Mediator.Send(command);
 
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            return await ResponseBase(result);
         }
         
         [HttpDelete("{id}")]
@@ -49,7 +42,7 @@ namespace MetWorkingUserPresentation.Controllers.Interest
             var command = new DeleteInterestCommand(id);
             var result = await Mediator.Send(command);
 
-            return NoContent();
+            return await ResponseBase(result);
         }
         
         [HttpPut("")]
@@ -58,7 +51,7 @@ namespace MetWorkingUserPresentation.Controllers.Interest
             var command = new UpdateInterestCommand(user);
             var result = await Mediator.Send(command);
 
-            return Ok(result);
+            return await ResponseBase(result);
         }
     }
 }

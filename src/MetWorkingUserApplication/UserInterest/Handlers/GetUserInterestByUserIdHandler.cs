@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using MetWorkingUserApplication.Common.Exceptions;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserApplication.UserInterest.Queries;
@@ -11,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MetWorkingUserApplication.UserInterest.Handlers
 {
-    public class GetUserInterestByUserIdHandler : IRequestHandler<GetUserInterestByUserIdQuery, UserInterestResponse>
+    public class GetUserInterestByUserIdHandler : IRequestHandler<GetUserInterestByUserIdQuery, BaseResponse<UserInterestResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         public GetUserInterestByUserIdHandler(IApplicationDbContext context)
@@ -19,13 +18,15 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
             _applicationDbContext = context;
         }
         
-        public async Task<UserInterestResponse> Handle(GetUserInterestByUserIdQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<UserInterestResponse>> Handle(GetUserInterestByUserIdQuery request, CancellationToken cancellationToken)
         {
             var query = _applicationDbContext.UserInterests.Where(ui => ui.UserId == request.UserId).ToList();
 
+            var responseRequest = new BaseResponse<UserInterestResponse>();
             if (!query.Any())
             {
-                throw new NotFoundException();
+                responseRequest.SetValidationErrors(new []{"Not found!"});
+                return responseRequest;
             }
 
             var user = await _applicationDbContext.Users.FirstOrDefaultAsync(uss => uss.Id == request.UserId,
@@ -43,8 +44,9 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
                 var interestToAdd = await _applicationDbContext.Interest.FirstOrDefaultAsync(it => it.Id == item.InterestId, cancellationToken);
                 response.Interests.Add(interestToAdd);
             }
+            responseRequest.SetIsOk(response);
 
-            return response;
+            return responseRequest;
         }
     }
 }

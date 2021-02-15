@@ -4,7 +4,7 @@ using MetWorkingUserApplication.Contracts.Response;
 
 namespace MetWorkingUserApplication.Interest.Commands
 {
-    public class CreateInterestCommand : IRequest<InterestResponse>
+    public class CreateInterestCommand : IRequest<BaseResponse<InterestResponse>>
     {
         public CreateInterestRequest CreateInterestRequest { get; set; }
 

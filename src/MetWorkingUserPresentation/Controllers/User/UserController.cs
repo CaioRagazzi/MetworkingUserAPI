@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Request;
@@ -17,7 +16,7 @@ namespace MetWorkingUserPresentation.Controllers.User
             var query = new GetUserByIdQuery(id);
             var result = await Mediator.Send(query);
 
-            return Ok(result);
+            return await ResponseBase(result);
         }
 
         [HttpPost("")]
@@ -26,7 +25,7 @@ namespace MetWorkingUserPresentation.Controllers.User
             var command = new CreateUserCommand(user);
             var result = await Mediator.Send(command);
 
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            return await ResponseBase(result);
         }
 
         [HttpDelete("{id}")]
@@ -35,7 +34,7 @@ namespace MetWorkingUserPresentation.Controllers.User
             var command = new DeleteUserCommand(id);
             var result = await Mediator.Send(command);
 
-            return Ok(result);
+            return await ResponseBase(result);
         }
 
         [HttpPut("")]
@@ -44,7 +43,7 @@ namespace MetWorkingUserPresentation.Controllers.User
             var command = new UpdateUserCommand(user);
             var result = await Mediator.Send(command);
 
-            return Ok(result);
+            return await ResponseBase(result);
         }
         
         [HttpPost("Authenticate")]
@@ -53,10 +52,7 @@ namespace MetWorkingUserPresentation.Controllers.User
             var command = new AuthenticateUserCommand(user);
             var result = await Mediator.Send(command);
 
-            if (result.Errors.Any()) return BadRequest(result);
-            if (result.IsForbbiden) return Unauthorized(result);
-            
-            return Ok(result);
+            return await ResponseBase(result);
         }
         
     }

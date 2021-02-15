@@ -4,7 +4,7 @@ using MetWorkingUserApplication.Contracts.Response;
 
 namespace MetWorkingUserApplication.Interest.Commands
 {
-    public class DeleteInterestCommand : IRequest
+    public class DeleteInterestCommand : IRequest<BaseResponse<string>>
     {
         public DeleteInterestCommand(Guid id)
         {

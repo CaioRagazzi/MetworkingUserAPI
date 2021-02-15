@@ -1,7 +1,6 @@
 using AutoMapper;
 using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Contracts.Response;
-using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.Mapping
 {

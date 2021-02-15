@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
@@ -26,8 +25,7 @@ namespace MetWorkingUserApplication.User.Handlers
             var response = new BaseResponse<string>();
             if (user == null)
             {
-                response.Errors.Add("User does not exists");
-                response.IsOk = false;
+                response.SetValidationErrors(new []{"User does not exists"});
                 return response;
             }
             
@@ -35,9 +33,7 @@ namespace MetWorkingUserApplication.User.Handlers
 
             if (!verified)
             {
-                response.Errors.Add("Forbidden");
-                response.IsForbbiden = true;
-                response.IsOk = false;
+                response.SetIsForbidden();
                 return response;
             }
             

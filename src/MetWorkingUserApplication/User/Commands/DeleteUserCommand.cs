@@ -1,10 +1,10 @@
 using System;
 using MediatR;
-using MetWorkingUserDomain.Entities;
+using MetWorkingUserApplication.Contracts.Response;
 
 namespace MetWorkingUserApplication.Commands
 {
-    public class DeleteUserCommand : IRequest
+    public class DeleteUserCommand : IRequest<BaseResponse<string>>
     {
         public Guid Id { get; set; }
 

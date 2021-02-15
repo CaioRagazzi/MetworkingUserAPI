@@ -1,5 +1,8 @@
+using System.Threading.Tasks;
 using MediatR;
+using MetWorkingUserApplication.Contracts.Response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MetWorkingUserPresentation.Controllers
@@ -11,5 +14,13 @@ namespace MetWorkingUserPresentation.Controllers
         private ISender _mediator;
 
         protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetService<ISender>();
+
+        public async Task<IActionResult> ResponseBase<T>(BaseResponse<T> response)
+        {
+            if (response.Errors.data.Any()) return BadRequest(response);
+            if (response.Errors.IsForbbiden) return Unauthorized(response);
+            
+            return Ok(response);
+        }
     }
 }

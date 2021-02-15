@@ -1,11 +1,11 @@
 using System;
 using MediatR;
-using MetWorkingUserApplication.Contracts.Request;
+using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.UserInterest.Commands
 {
-    public class CreateUserInterestCommand : IRequest<UserInterests>
+    public class CreateUserInterestCommand : IRequest<BaseResponse<UserInterests>>
     {
         public CreateUserInterestCommand(Guid userId, Guid interestId)
         {

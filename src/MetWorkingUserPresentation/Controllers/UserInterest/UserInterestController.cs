@@ -1,7 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using MediatR;
-using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.UserInterest.Commands;
 using MetWorkingUserApplication.UserInterest.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +14,7 @@ namespace MetWorkingUserPresentation.Controllers.UserInterest
             var query = new GetUserInterestByUserIdQuery(userId);
             var result = await Mediator.Send(query);
 
-            return Ok(result);
+            return await ResponseBase(result);
         }
         
         [HttpPost("")]
@@ -25,7 +23,7 @@ namespace MetWorkingUserPresentation.Controllers.UserInterest
             var command = new CreateUserInterestCommand(userId, interestId);
             var result = await Mediator.Send(command);
 
-            return CreatedAtAction(nameof(GetByUserId), new { userId = result.UserId }, Unit.Value);
+            return await ResponseBase(result);
         }
 
         [HttpDelete("User/{userId}/Interest/{interestId}")]
@@ -34,7 +32,7 @@ namespace MetWorkingUserPresentation.Controllers.UserInterest
             var command = new DeleteUserInterestByIdCommand(userId, interestId);
             var result = await Mediator.Send(command);
 
-            return NoContent();
+            return await ResponseBase(result);
         }
     }
 }

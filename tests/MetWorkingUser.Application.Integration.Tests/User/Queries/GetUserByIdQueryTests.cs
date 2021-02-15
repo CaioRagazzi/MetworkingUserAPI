@@ -23,14 +23,14 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Queries
             });
             var query = new GetUserByIdQuery(guid);
 
-            UserResponse result = await SendAsync(query);
+            var result = await SendAsync(query);
 
             result.Should().NotBeNull();
-            result.Email.Should().BeOfType(typeof(string));
-            result.Email.Should().Be("ca.ragazzi@gmail.com");
-            result.Id.Should().Be(guid);
-            result.Name.Should().BeOfType(typeof(string));
-            result.Name.Should().Be("Caio Eduardo Ragazzi");
+            result.Data.Email.Should().BeOfType(typeof(string));
+            result.Data.Email.Should().Be("ca.ragazzi@gmail.com");
+            result.Data.Id.Should().Be(guid);
+            result.Data.Name.Should().BeOfType(typeof(string));
+            result.Data.Name.Should().Be("Caio Eduardo Ragazzi");
         } 
         
     }

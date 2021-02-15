@@ -8,7 +8,7 @@ using MetWorkingUserApplication.Interfaces;
 
 namespace MetWorkingUserApplication.User.Handlers
 {
-    public class CreateUserHandler : IRequestHandler<CreateUserCommand, UserResponse>
+    public class CreateUserHandler : IRequestHandler<CreateUserCommand, BaseResponse<UserResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
@@ -17,7 +17,7 @@ namespace MetWorkingUserApplication.User.Handlers
             _applicationDbContext = context;
             _mapper = mapper;
         }
-        public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<UserResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = _mapper.Map<MetWorkingUserDomain.Entities.User>(request.UserRequest);
             await _applicationDbContext.Users.AddAsync(user, cancellationToken);
@@ -26,7 +26,12 @@ namespace MetWorkingUserApplication.User.Handlers
 
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<UserResponse>(user);
+            var userResponse = _mapper.Map<UserResponse>(user);
+
+            var response = new BaseResponse<UserResponse>();
+            response.SetIsOk(userResponse);
+
+            return response;
         }
     }
 }

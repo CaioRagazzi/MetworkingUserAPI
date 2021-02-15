@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
 using MediatR;
 using MetWorkingUserApplication.Contracts.Response;
-using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.UserInterest.Queries
 {
-    public class GetUserInterestByUserIdQuery : IRequest<UserInterestResponse>
+    public class GetUserInterestByUserIdQuery : IRequest<BaseResponse<UserInterestResponse>>
     {
         public GetUserInterestByUserIdQuery(Guid userId)
         {

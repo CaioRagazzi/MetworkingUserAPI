@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.Contracts.Response
 {

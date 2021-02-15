@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -25,7 +23,7 @@ namespace MetWorkingUserApplication.Interest.Handlers
             var interests = await _applicationDbContext.Interest.ToListAsync(cancellationToken);
 
             var response = new BaseResponse<IEnumerable<MetWorkingUserDomain.Entities.Interest>>();
-            response.Data = interests;
+            response.SetIsOk(interests);
             
             return response;
         }

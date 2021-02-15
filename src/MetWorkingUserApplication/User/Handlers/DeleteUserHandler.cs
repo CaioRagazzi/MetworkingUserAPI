@@ -2,33 +2,36 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MetWorkingUserApplication.Commands;
-using MetWorkingUserApplication.Common.Exceptions;
+using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
-using MetWorkingUserDomain.Entities;
 
-namespace MetWorkingUserApplication.Handlers
+namespace MetWorkingUserApplication.User.Handlers
 {
-    public class DeleteUserHandler : IRequestHandler<DeleteUserCommand>
+    public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, BaseResponse<string>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         public DeleteUserHandler(IApplicationDbContext context)
         {
             _applicationDbContext = context;
         }
-        public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             var entity = await _applicationDbContext.Users.FindAsync(request.Id);
 
+            var response = new BaseResponse<string>();
             if (entity == null)
             {
-                throw new NotFoundException(nameof(User), request.Id);
+                response.SetValidationErrors(new []{"User Not Found!"});
+                return response;
             }
 
             _applicationDbContext.Users.Remove(entity);
 
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
+            
+            response.SetIsOk($"User {entity.Name} has been updated!");
 
-            return Unit.Value;
+            return response;
         }
     }
 }
