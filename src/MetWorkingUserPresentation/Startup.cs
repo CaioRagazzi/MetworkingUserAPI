@@ -29,6 +29,7 @@ namespace MetWorkingUserPresentation
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MetWorkingUserAPI", Version = "v1" });
             });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,9 +44,10 @@ namespace MetWorkingUserPresentation
 
             app.ConfigureCustomExceptionMiddleware();
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(option => option.AllowAnyOrigin());
 
             app.UseAuthorization();
 
