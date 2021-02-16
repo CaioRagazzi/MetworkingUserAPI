@@ -21,6 +21,22 @@ namespace MetWorkingUserInfrastructure.Persistence.configurations
                 .Property(u => u.Password)
                 .HasMaxLength(255)
                 .IsRequired();
+
+            builder
+                .Property(u => u.Image)
+                .HasColumnType("BLOB");
+
+            builder
+                .Property(u => u.Description)
+                .HasMaxLength(255);
+
+            builder
+                .Property(u => u.Company)
+                .HasMaxLength(255);
+
+            builder
+                .Property(u => u.Role)
+                .HasMaxLength(255);
         }
     }
 }

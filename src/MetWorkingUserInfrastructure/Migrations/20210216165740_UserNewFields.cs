@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MetWorkingUserInfrastructure.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class UserNewFields : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace MetWorkingUserInfrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 255, nullable: false),
+                    Description = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,9 +25,13 @@ namespace MetWorkingUserInfrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 255, nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Password = table.Column<string>(maxLength: 255, nullable: false),
+                    Image = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    Company = table.Column<string>(maxLength: 255, nullable: true),
+                    Role = table.Column<string>(maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,6 +66,12 @@ namespace MetWorkingUserInfrastructure.Migrations
                 name: "IX_UserInterests_InterestId",
                 table: "UserInterests",
                 column: "InterestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

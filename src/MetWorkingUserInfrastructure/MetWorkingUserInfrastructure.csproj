@@ -19,4 +19,8 @@
     <ProjectReference Include="..\MetWorkingUserApplication\MetWorkingUserApplication.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces" />
+  </ItemGroup>
+
 </Project>

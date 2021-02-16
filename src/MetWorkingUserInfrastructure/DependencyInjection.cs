@@ -1,4 +1,6 @@
 using MetWorkingUserApplication.Interfaces;
+using MetWorkingUserApplication.Interfaces.Slack;
+using MetWorkingUserInfrastructure.Clients;
 using Microsoft.EntityFrameworkCore;
 using MetWorkingUserInfrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +26,8 @@ namespace MetWorkingUserInfrastructure
 
                 services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             }
+
+            services.AddTransient<ISlackClient>(c => new SlackClient(configuration));
         }
     }
 }

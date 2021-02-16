@@ -24,7 +24,6 @@ namespace MetWorkingUser.Application.Integration.Tests
         [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
-            var teste = Directory.GetCurrentDirectory();
             _builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.test.json", true, true)
                 .AddEnvironmentVariables();

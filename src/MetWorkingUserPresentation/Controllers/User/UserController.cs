@@ -55,5 +55,14 @@ namespace MetWorkingUserPresentation.Controllers.User
             return await ResponseBase(result);
         }
         
+        [HttpPut("{userId}/UpdateImage")]
+        public async Task<IActionResult> Update([FromBody]UpdateUserImageRequest updateUserImageRequest, Guid userId)
+        {
+            var command = new UpdateUserImageCommand(updateUserImageRequest.imageBase64, userId);
+            var result = await Mediator.Send(command);
+
+            return await ResponseBase(result);
+        }
+        
     }
 }

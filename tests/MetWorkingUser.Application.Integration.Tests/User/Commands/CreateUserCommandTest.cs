@@ -1,7 +1,5 @@
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using FluentValidation;
 using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Request;
 using NUnit.Framework;

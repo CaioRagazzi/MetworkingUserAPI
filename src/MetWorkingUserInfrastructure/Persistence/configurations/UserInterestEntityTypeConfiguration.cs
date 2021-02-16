@@ -10,7 +10,7 @@ namespace MetWorkingUserInfrastructure.Persistence.configurations
             builder.HasKey(usi => new {usi.UserId, usi.InterestId});
 
             builder
-                .HasOne<User>(usr => usr.User)
+                .HasOne(usr => usr.User)
                 .WithMany(usi => usi.Interest)
                 .HasForeignKey(usi => usi.UserId);
         }

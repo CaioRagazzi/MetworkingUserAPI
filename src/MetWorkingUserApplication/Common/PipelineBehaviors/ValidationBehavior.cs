@@ -5,9 +5,8 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
-using FluentValidation.Results;
 using MetWorkingUserApplication.Contracts.Response;
-using MetWorkingUserApplication.Interfaces;
+using MetWorkingUserApplication.Interfaces.Slack;
 
 namespace MetWorkingUserApplication.Common.PipelineBehaviors
 {
@@ -16,10 +15,12 @@ namespace MetWorkingUserApplication.Common.PipelineBehaviors
         where TResponse: class
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
+        // private readonly ISlackService _slackService;
 
-        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators, ISlackService slackService)
         {
             _validators = validators;
+            // _slackService = slackService;
         }
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -30,18 +31,26 @@ namespace MetWorkingUserApplication.Common.PipelineBehaviors
                 .Where(x => x != null)
                 .ToList();
 
-            if (failures.Any())
+            if (!failures.Any())
             {
-                var responseType = typeof(TResponse);
-                var resultType = responseType.GetGenericArguments()[0];
-                var baseResponseType = typeof(BaseResponse<>).MakeGenericType(resultType);
+                var result = await next();
+                if (result is not BaseResponse<UserResponse> userResponse) return result;
+                if (userResponse.IsOk)
+                {
+                    // await _slackService.PostToSlack($"User {userResponse.Data.Name} has been created!");
+                }
 
-                var invalidResponse = Activator.CreateInstance(baseResponseType, null, failures) as TResponse;
-
-                return invalidResponse;
+                return result;
             }
+            
+            var responseType = typeof(TResponse);
+            var resultType = responseType.GetGenericArguments()[0];
+            var baseResponseType = typeof(BaseResponse<>).MakeGenericType(resultType);
 
-            return await next();
+            var invalidResponse = Activator.CreateInstance(baseResponseType, null, failures) as TResponse;
+
+            return invalidResponse;
+
         }
     }
 }

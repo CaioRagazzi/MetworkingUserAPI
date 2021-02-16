@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Queries;
 using NUnit.Framework;
 

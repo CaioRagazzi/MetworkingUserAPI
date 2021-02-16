@@ -3,12 +3,11 @@ using FluentValidation;
 using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Interfaces;
 
-namespace MetWorkingUserApplication.Validation
+namespace MetWorkingUserApplication.User.Validation
 {
     public class CreateUserRequestValidation : AbstractValidator<CreateUserCommand>
     {
-        private readonly IApplicationDbContext _applicationDbContext;
-        public CreateUserRequestValidation(IApplicationDbContext _applicationDbContext)
+        public CreateUserRequestValidation(IApplicationDbContext applicationDbContext)
         {            
             RuleFor(x => x.UserRequest.Email)
                 .NotEmpty()
@@ -23,8 +22,8 @@ namespace MetWorkingUserApplication.Validation
                 .MinimumLength(6);
 
             RuleFor(x => x.UserRequest.Email)
-                .Must((createUserCommand, cancellation) => {
-                    var exists = _applicationDbContext.Users.Where(
+                .Must((createUserCommand, _) => {
+                    var exists = applicationDbContext.Users.Where(
                         entity => entity.Email == createUserCommand.UserRequest.Email).ToList();
 
                     return !exists.Any();

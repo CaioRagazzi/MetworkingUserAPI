@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetWorkingUserPresentation"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetWorkingUser.Application.Integration.Tests", "tests\MetWorkingUser.Application.Integration.Tests\MetWorkingUser.Application.Integration.Tests.csproj", "{FC9FDB68-4CD9-4CEF-9194-467B91775B0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetWorkingUser.Infrastructure.Integration.Tests", "tests\MetWorkingUser.Infrastructure.Integration.Tests\MetWorkingUser.Infrastructure.Integration.Tests.csproj", "{3D58BEE0-6F92-4C89-B6A7-5D4AD3B20941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetWorkingUser.Application.Unit.Tests", "tests\MetWorkingUser.Application.Unit.Tests\MetWorkingUser.Application.Unit.Tests.csproj", "{143DE16B-28B6-461F-B35B-B106AE5AE4D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{FC9FDB68-4CD9-4CEF-9194-467B91775B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC9FDB68-4CD9-4CEF-9194-467B91775B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC9FDB68-4CD9-4CEF-9194-467B91775B0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D58BEE0-6F92-4C89-B6A7-5D4AD3B20941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D58BEE0-6F92-4C89-B6A7-5D4AD3B20941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D58BEE0-6F92-4C89-B6A7-5D4AD3B20941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D58BEE0-6F92-4C89-B6A7-5D4AD3B20941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{143DE16B-28B6-461F-B35B-B106AE5AE4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{143DE16B-28B6-461F-B35B-B106AE5AE4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{143DE16B-28B6-461F-B35B-B106AE5AE4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{143DE16B-28B6-461F-B35B-B106AE5AE4D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

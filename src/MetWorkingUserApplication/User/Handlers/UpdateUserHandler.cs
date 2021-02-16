@@ -32,6 +32,9 @@ namespace MetWorkingUserApplication.User.Handlers
 
             user.Email = userRequest.Email;
             user.Name = userRequest.Name;
+            user.Description = userRequest.Description;
+            user.Company = userRequest.Company;
+            user.Role = userRequest.Role;
 
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
             var userResponse = _mapper.Map<UserResponse>(user);
