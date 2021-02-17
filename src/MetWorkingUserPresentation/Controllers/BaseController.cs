@@ -16,7 +16,7 @@ namespace MetWorkingUserPresentation.Controllers
 
         protected async Task<IActionResult> ResponseBase<T>(BaseResponse<T> response)
         {
-            if (response.Errors.data.Count > 1) return BadRequest(response);
+            if (response.Errors.data.Count >= 1) return BadRequest(response);
             if (response.Errors.IsForbbiden) return Unauthorized(response);
             
             return Ok(response);

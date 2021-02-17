@@ -29,7 +29,7 @@ namespace MetWorkingUserApplication.User.Handlers
 
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
             
-            response.SetIsOk($"User {entity.Name} has been updated!");
+            response.SetIsOk($"User {entity.Name} has been deleted!");
 
             return response;
         }
