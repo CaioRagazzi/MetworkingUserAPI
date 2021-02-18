@@ -4,6 +4,7 @@ using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Queries;
 using MetWorkingUserApplication.User.Commands;
+using MetWorkingUserApplication.User.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MetWorkingUserPresentation.Controllers.User
@@ -60,6 +61,15 @@ namespace MetWorkingUserPresentation.Controllers.User
         {
             var command = new UpdateUserImageCommand(updateUserImageRequest.imageBase64, userId);
             var result = await Mediator.Send(command);
+
+            return await ResponseBase(result);
+        }
+        
+        [HttpGet("")]
+        public async Task<IActionResult> GetAll()
+        {
+            var query = new GetAllUsersQuery();
+            var result = await Mediator.Send(query);
 
             return await ResponseBase(result);
         }
