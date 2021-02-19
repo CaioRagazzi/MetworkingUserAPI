@@ -24,7 +24,7 @@ namespace MetWorkingUserInfrastructure.Persistence.configurations
 
             builder
                 .Property(u => u.Image)
-                .HasColumnType("BLOB");
+                .HasMaxLength(255);
 
             builder
                 .Property(u => u.Description)

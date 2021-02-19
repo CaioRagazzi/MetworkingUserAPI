@@ -28,7 +28,7 @@ namespace MetWorkingUserApplication.User.Handlers
                 return response;
             }
 
-            user.Image = request.imageBase64;
+            user.Image = request.ImageUrl;
             
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
             

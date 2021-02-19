@@ -59,7 +59,7 @@ namespace MetWorkingUserPresentation.Controllers.User
         [HttpPut("{userId}/UpdateImage")]
         public async Task<IActionResult> Update([FromBody]UpdateUserImageRequest updateUserImageRequest, Guid userId)
         {
-            var command = new UpdateUserImageCommand(updateUserImageRequest.imageBase64, userId);
+            var command = new UpdateUserImageCommand(updateUserImageRequest.ImageUrl, userId);
             var result = await Mediator.Send(command);
 
             return await ResponseBase(result);

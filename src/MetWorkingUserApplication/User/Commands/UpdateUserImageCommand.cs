@@ -6,13 +6,13 @@ namespace MetWorkingUserApplication.User.Commands
 {
     public class UpdateUserImageCommand : IRequest<BaseResponse<string>>
     {
-        public UpdateUserImageCommand(byte[] imageBase64, Guid userId)
+        public UpdateUserImageCommand(string imageBase64, Guid userId)
         {
-            this.imageBase64 = imageBase64;
+            this.ImageUrl = imageBase64;
             this.UserId = userId;
         }
 
-        public byte[] imageBase64 { get; set; }
+        public string ImageUrl { get; set; }
         public Guid UserId { get; set; }
     }
 }
