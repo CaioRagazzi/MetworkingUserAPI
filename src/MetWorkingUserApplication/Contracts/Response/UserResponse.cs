@@ -10,5 +10,6 @@ namespace MetWorkingUserApplication.Contracts.Response
         public string Description { get; set; }
         public string Company { get; set; }
         public string Role { get; set; }
+        public string Image { get; set; }
     }   
 }
