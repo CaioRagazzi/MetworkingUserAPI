@@ -4,7 +4,7 @@ using MetWorkingUserApplication.Contracts.Response;
 
 namespace MetWorkingUserApplication.User.Commands
 {
-    public class AuthenticateUserCommand: IRequest<BaseResponse<string>>
+    public class AuthenticateUserCommand: IRequest<BaseResponse<AuthenticateUserResponse>>
     {
         public AuthenticateUserCommand(AuthenticateUserRequest authenticateUserRequest)
         {

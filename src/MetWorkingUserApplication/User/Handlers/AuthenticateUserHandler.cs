@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MetWorkingUserApplication.User.Handlers
 {
-    public class AuthenticateUserHandler: IRequestHandler<AuthenticateUserCommand, BaseResponse<string>>
+    public class AuthenticateUserHandler: IRequestHandler<AuthenticateUserCommand, BaseResponse<AuthenticateUserResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
 
@@ -17,12 +17,12 @@ namespace MetWorkingUserApplication.User.Handlers
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task<BaseResponse<string>> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<AuthenticateUserResponse>> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _applicationDbContext.Users.FirstOrDefaultAsync(usr =>
                 usr.Email == request.AuthenticateUserRequest.UserEmail, cancellationToken);
 
-            var response = new BaseResponse<string>();
+            var response = new BaseResponse<AuthenticateUserResponse>();
             if (user == null)
             {
                 response.SetValidationErrors(new []{"User does not exists"});
@@ -36,6 +36,8 @@ namespace MetWorkingUserApplication.User.Handlers
                 response.SetIsForbidden();
                 return response;
             }
+
+            response.SetIsOk(new AuthenticateUserResponse(user.Id));
             
             return response;
         }
