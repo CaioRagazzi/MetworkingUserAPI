@@ -22,7 +22,7 @@ namespace MetWorkingUserApplication.Validation
             RuleFor(x => x.UserUpdateRequest.Email)
                 .Must((createUserCommand, cancellation) => {
                     var exists = _applicationDbContext.Users.Where(
-                        entity => entity.Email == createUserCommand.UserUpdateRequest.Email).ToList();
+                        entity => entity.Email == createUserCommand.UserUpdateRequest.Email && entity.Id != createUserCommand.UserUpdateRequest.Id).ToList();
 
                     return !exists.Any();
                 })

@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserApplication.User.Commands;

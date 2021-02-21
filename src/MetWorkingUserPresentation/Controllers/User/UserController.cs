@@ -74,5 +74,14 @@ namespace MetWorkingUserPresentation.Controllers.User
             return await ResponseBase(result);
         }
         
+        [HttpPost("Boost")]
+        public async Task<IActionResult> Boost([FromBody]BoostUserRequest boostUserRequest)
+        {
+            var command = new BoostUserCommand(boostUserRequest);
+            var result = await Mediator.Send(command);
+
+            return await ResponseBase(result);
+        }
+        
     }
 }

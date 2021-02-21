@@ -67,7 +67,7 @@ namespace MetWorkingUser.Application.Integration.Tests.User.Commands
             {
                 Email = email,
                 Name = name,
-                Id = guid
+                Id = Guid.NewGuid()
             };
             
             var command = new UpdateUserCommand(updateUserRequest);

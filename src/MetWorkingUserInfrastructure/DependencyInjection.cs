@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MetWorkingUserInfrastructure
 {
+    using MassTransit;
+    // using MetWorkingUserApplication.User.Consumer;
+
     public static class DependencyInjection
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -28,6 +31,19 @@ namespace MetWorkingUserInfrastructure
             }
 
             services.AddTransient<ISlackClient>(c => new SlackClient(configuration));
+            // services.AddMassTransit(config =>
+            // {
+            //     config.AddConsumer<UserAddBoostConsumer>();
+            //     config.UsingRabbitMq((ctx, cfg) =>
+            //     {
+            //         cfg.Host("amqp://guest:guest@localhost:5672");
+            //         cfg.ReceiveEndpoint("user-boost-queue", c =>
+            //         {
+            //             c.ConfigureConsumer<UserAddBoostConsumer>(ctx);
+            //         });
+            //     });
+            // });
+            // services.AddMassTransitHostedService();
         }
     }
 }
