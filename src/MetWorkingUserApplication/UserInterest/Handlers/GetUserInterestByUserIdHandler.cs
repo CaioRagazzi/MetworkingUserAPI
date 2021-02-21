@@ -23,11 +23,6 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
             var query = _applicationDbContext.UserInterests.Where(ui => ui.UserId == request.UserId).ToList();
 
             var responseRequest = new BaseResponse<UserInterestResponse>();
-            // if (!query.Any())
-            // {
-            //     responseRequest.SetValidationErrors(new []{"Not found!"});
-            //     return responseRequest;
-            // }
 
             var user = await _applicationDbContext.Users.FirstOrDefaultAsync(uss => uss.Id == request.UserId,
                 cancellationToken);
