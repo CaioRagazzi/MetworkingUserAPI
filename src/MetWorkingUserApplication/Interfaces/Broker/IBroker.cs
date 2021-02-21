@@ -5,6 +5,6 @@ namespace MetWorkingUserApplication.Interfaces.Broker
         public void Connect(string connectionString);
         public byte[] CreateMessage<T>(T message);
         public void Publish(byte[] message, string queue);
-        public string Consumer(string queue);
+        public void Consumer(string queue);
     }
 }

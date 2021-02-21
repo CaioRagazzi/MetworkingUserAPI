@@ -10,6 +10,12 @@ namespace MetWorkingUserInfrastructure.Broker
     public class RabbitMqBroker : IBroker
     {
         private IConnection Connection { get; set; }
+
+        public RabbitMqBroker()
+        {
+            Connect("amqp://guest:guest@localhost:5672");
+            Consumer("boost-user");
+        }
         
         public void Connect(string connectionString)
         {
@@ -38,9 +44,11 @@ namespace MetWorkingUserInfrastructure.Broker
                 arguments: null);
             
             channel.BasicPublish("", queue, null, message);
+            channel.Close();
+            Connection.Close();
         }
 
-        public string Consumer(string queue)
+        public void Consumer(string queue)
         {
             var channel = Connection.CreateModel();
             channel.QueueDeclare(queue,
@@ -55,10 +63,9 @@ namespace MetWorkingUserInfrastructure.Broker
             {
                 var body = e.Body.ToArray();
                 message = Encoding.UTF8.GetString(body);
+                Console.Out.WriteLine(message);
             };
             channel.BasicConsume(queue, true, consumer);
-
-            return message;
         }
     }
 }

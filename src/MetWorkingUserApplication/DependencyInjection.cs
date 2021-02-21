@@ -18,6 +18,6 @@ namespace MetWorkingUserApplication
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient<ISlackService, SlackService>();
-       }  
+        }  
     }   
 }

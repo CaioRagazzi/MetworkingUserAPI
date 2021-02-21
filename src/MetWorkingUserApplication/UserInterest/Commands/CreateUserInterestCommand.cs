@@ -5,7 +5,7 @@ using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.UserInterest.Commands
 {
-    public class CreateUserInterestCommand : IRequest<BaseResponse<UserInterests>>
+    public class CreateUserInterestCommand : IRequest<BaseResponse<string>>
     {
         public CreateUserInterestCommand(Guid userId, Guid interestId)
         {

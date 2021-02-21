@@ -1,3 +1,4 @@
+using System;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserApplication.Interfaces.Slack;
 using MetWorkingUserInfrastructure.Clients;
@@ -8,7 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MetWorkingUserInfrastructure
 {
-    using MassTransit;
+    using Broker;
+    using MetWorkingUserApplication.Interfaces.Broker;
+
     // using MetWorkingUserApplication.User.Consumer;
 
     public static class DependencyInjection
@@ -31,19 +34,7 @@ namespace MetWorkingUserInfrastructure
             }
 
             services.AddTransient<ISlackClient>(c => new SlackClient(configuration));
-            // services.AddMassTransit(config =>
-            // {
-            //     config.AddConsumer<UserAddBoostConsumer>();
-            //     config.UsingRabbitMq((ctx, cfg) =>
-            //     {
-            //         cfg.Host("amqp://guest:guest@localhost:5672");
-            //         cfg.ReceiveEndpoint("user-boost-queue", c =>
-            //         {
-            //             c.ConfigureConsumer<UserAddBoostConsumer>(ctx);
-            //         });
-            //     });
-            // });
-            // services.AddMassTransitHostedService();
+            // services.AddSingleton<IBroker>(new RabbitMqBroker());
         }
     }
 }
