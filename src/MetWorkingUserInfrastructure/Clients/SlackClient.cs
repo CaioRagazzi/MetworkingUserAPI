@@ -17,10 +17,10 @@ namespace MetWorkingUserInfrastructure.Clients
 
         public SlackClient(IConfiguration configuration)
         {
-            // _configuration = configuration;
-            // var slackUrl = _configuration.GetSection("SlackURL").Value;
-            // _uri = new Uri(slackUrl);
-            // _configuration = configuration;
+            _configuration = configuration;
+            var slackUrl = _configuration.GetSection("SlackURL").Value;
+            _uri = new Uri(slackUrl);
+            _configuration = configuration;
         }
         
         public string PostMessage(string text, string channel = null)

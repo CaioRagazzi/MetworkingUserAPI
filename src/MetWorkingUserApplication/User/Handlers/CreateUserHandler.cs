@@ -5,6 +5,7 @@ using MediatR;
 using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
+using MetWorkingUserApplication.Interfaces.Slack;
 
 namespace MetWorkingUserApplication.User.Handlers
 {

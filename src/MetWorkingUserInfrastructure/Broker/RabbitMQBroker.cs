@@ -13,7 +13,7 @@ namespace MetWorkingUserInfrastructure.Broker
 
         public RabbitMqBroker()
         {
-            Connect("amqp://guest:guest@localhost:5672");
+            Connect("amqp://guest:guest@rabbitmq:5672");
             Consumer("boost-user");
         }
         
@@ -44,8 +44,6 @@ namespace MetWorkingUserInfrastructure.Broker
                 arguments: null);
             
             channel.BasicPublish("", queue, null, message);
-            channel.Close();
-            Connection.Close();
         }
 
         public void Consumer(string queue)

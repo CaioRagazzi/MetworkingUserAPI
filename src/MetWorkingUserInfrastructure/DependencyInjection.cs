@@ -1,6 +1,8 @@
 using System;
 using MetWorkingUserApplication.Interfaces;
+using MetWorkingUserApplication.Interfaces.Broker;
 using MetWorkingUserApplication.Interfaces.Slack;
+using MetWorkingUserInfrastructure.Broker;
 using MetWorkingUserInfrastructure.Clients;
 using Microsoft.EntityFrameworkCore;
 using MetWorkingUserInfrastructure.Persistence;
@@ -9,11 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MetWorkingUserInfrastructure
 {
-    using Broker;
-    using MetWorkingUserApplication.Interfaces.Broker;
-
-    // using MetWorkingUserApplication.User.Consumer;
-
     public static class DependencyInjection
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -34,7 +31,7 @@ namespace MetWorkingUserInfrastructure
             }
 
             services.AddTransient<ISlackClient>(c => new SlackClient(configuration));
-            // services.AddSingleton<IBroker>(new RabbitMqBroker());
+            services.AddSingleton<IBroker>(new RabbitMqBroker());
         }
     }
 }

@@ -13,10 +13,12 @@ namespace MetWorkingUserApplication.User.Handlers
     public class BoostUserHandler : IRequestHandler<BoostUserCommand, BaseResponse<BoostUserResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
+        private readonly IBroker _broker;
         
-        public BoostUserHandler(IApplicationDbContext applicationDbContext)
+        public BoostUserHandler(IApplicationDbContext applicationDbContext, IBroker broker)
         {
             _applicationDbContext = applicationDbContext;
+            _broker = broker;
         }
 
         public async Task<BaseResponse<BoostUserResponse>> Handle(BoostUserCommand request, CancellationToken cancellationToken)
@@ -31,8 +33,8 @@ namespace MetWorkingUserApplication.User.Handlers
                 return response;
             }
 
-            // var message = _broker.CreateMessage(user);
-            // _broker.Publish(message, "boost-user");
+            var message = _broker.CreateMessage(user);
+            _broker.Publish(message, "boost-user");
             var boostUserResponse = new BoostUserResponse("User has been queued to be Boosted");
             response.SetIsOk(boostUserResponse);
 

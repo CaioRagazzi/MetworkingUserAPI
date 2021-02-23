@@ -15,12 +15,12 @@ namespace MetWorkingUserApplication.Common.PipelineBehaviors
         where TResponse: class
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
-        // private readonly ISlackService _slackService;
+        private readonly ISlackService _slackService;
 
         public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators, ISlackService slackService)
         {
             _validators = validators;
-            // _slackService = slackService;
+            _slackService = slackService;
         }
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -37,7 +37,7 @@ namespace MetWorkingUserApplication.Common.PipelineBehaviors
                 if (result is not BaseResponse<UserResponse> userResponse) return result;
                 if (userResponse.IsOk)
                 {
-                    // await _slackService.PostToSlack($"User {userResponse.Data.Name} has been created!");
+                    await _slackService.PostToSlack($"User {userResponse.Data.Name} has been created!");
                 }
 
                 return result;
