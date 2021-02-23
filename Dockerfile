@@ -1,17 +1,18 @@
-FROM  mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine AS base
 WORKDIR /app
+EXPOSE 5000
+ENV ASPNETCORE_URLS=http://*:5000
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 WORKDIR /src
 
-COPY *.sln .
 COPY ["/src/MetWorkingUserPresentation/*.csproj", "./MetWorkingUserPresentation/"]
 COPY ["/src/MetWorkingUserApplication/*.csproj", "./MetWorkingUserApplication/"]
 COPY ["/src/MetWorkingUserDomain/*.csproj", "./MetWorkingUserDomain/"]
 COPY ["/src/MetWorkingUserInfrastructure/*.csproj", "./MetWorkingUserInfrastructure/"]
 
 RUN dotnet restore "MetWorkingUserPresentation/MetWorkingUserPresentation.csproj"
-COPY "./" .
+COPY . .
 
 WORKDIR "src/MetWorkingUserPresentation"
 RUN dotnet build "MetWorkingUserPresentation.csproj" -c Release -o /app/build
@@ -23,9 +24,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-
-EXPOSE 5001
-EXPOSE 5000
-ENV ASPNETCORE_URLS=http://*:5000
-
-ENTRYPOINT ["dotnet", "MetWorkingUserPresentation.dll"]
+ENTRYPOINT ["dotnet", "MetWorkingUserPresentation.dll","--environment=Production"]
