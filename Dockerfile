@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine AS base
 WORKDIR /app
-EXPOSE 5000
-ENV ASPNETCORE_URLS=http://*:5000
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 WORKDIR /src
@@ -23,5 +21,8 @@ RUN dotnet publish "MetWorkingUserPresentation.csproj" -c Release -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+EXPOSE 8081
+ENV ASPNETCORE_URLS=http://*:8081
 
 ENTRYPOINT ["dotnet", "MetWorkingUserPresentation.dll","--environment=Production"]

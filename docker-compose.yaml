@@ -23,13 +23,10 @@ services:
       timeout: 5s
       retries: 3
   metworkinguser:
-    image: metworkinguser
+    image: caioragazzi/metworkinguser:1.0.0
     container_name: metworkinguser-api
-    build:
-      context: .
-      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "8081:8081"
     networks:
       - net
     depends_on:
