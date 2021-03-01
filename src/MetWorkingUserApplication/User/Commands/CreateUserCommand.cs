@@ -2,7 +2,7 @@ using MediatR;
 using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Contracts.Response;
 
-namespace MetWorkingUserApplication.Commands
+namespace MetWorkingUserApplication.User.Commands
 {
     public class CreateUserCommand : IRequest<BaseResponse<UserResponse>>
     {
@@ -11,7 +11,6 @@ namespace MetWorkingUserApplication.Commands
         public CreateUserCommand(CreateUserRequest userRequest)
         {
             UserRequest = userRequest;
-        } 
-        
+        }
     }
 }

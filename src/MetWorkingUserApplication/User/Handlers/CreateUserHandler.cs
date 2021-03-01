@@ -6,6 +6,7 @@ using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserApplication.Interfaces.Slack;
+using MetWorkingUserApplication.User.Commands;
 
 namespace MetWorkingUserApplication.User.Handlers
 {
