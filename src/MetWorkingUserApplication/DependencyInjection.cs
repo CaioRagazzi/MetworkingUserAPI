@@ -3,8 +3,6 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 using MetWorkingUserApplication.Common.PipelineBehaviors;
-using MetWorkingUserApplication.Interfaces.Slack;
-using MetWorkingUserApplication.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MetWorkingUserApplication
@@ -17,7 +15,6 @@ namespace MetWorkingUserApplication
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddTransient<ISlackService, SlackService>();
         }  
     }   
 }

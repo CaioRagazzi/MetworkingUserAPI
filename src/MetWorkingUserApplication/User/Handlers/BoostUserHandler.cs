@@ -8,17 +8,14 @@ namespace MetWorkingUserApplication.User.Handlers
     using Commands;
     using Contracts.Response;
     using Interfaces;
-    using Interfaces.Broker;
 
     public class BoostUserHandler : IRequestHandler<BoostUserCommand, BaseResponse<BoostUserResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
-        private readonly IBroker _broker;
         
-        public BoostUserHandler(IApplicationDbContext applicationDbContext, IBroker broker)
+        public BoostUserHandler(IApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
-            _broker = broker;
         }
 
         public async Task<BaseResponse<BoostUserResponse>> Handle(BoostUserCommand request, CancellationToken cancellationToken)
@@ -32,9 +29,6 @@ namespace MetWorkingUserApplication.User.Handlers
                 response.SetValidationErrors(new []{"User does not exists"});
                 return response;
             }
-
-            var message = _broker.CreateMessage(user);
-            _broker.Publish(message, "boost-user");
             var boostUserResponse = new BoostUserResponse("User has been queued to be Boosted");
             response.SetIsOk(boostUserResponse);
 
