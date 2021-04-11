@@ -13,7 +13,7 @@ namespace MetWorkingUserInfrastructure
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
-                    configuration.GetConnectionString("DefaultConnection"),
+                    configuration["METWORKING_CONNECTION"],
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
