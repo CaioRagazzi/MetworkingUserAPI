@@ -82,6 +82,15 @@ namespace MetWorkingUserPresentation.Controllers.User
 
             return await ResponseBase(result);
         }
+
+        [HttpGet("Timeline/{id}")]
+        public async Task<IActionResult> GetTimeline([FromRoute] Guid id)
+        {
+            var query = new GetTimelineQuery(id);
+            var result = await Mediator.Send(query);
+
+            return await ResponseBase(result);
+        }
         
     }
 }
