@@ -21,13 +21,20 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
         {
             var query = _applicationDbContext.UserInterests.Where(ui => ui.UserId == request.UserId).ToList();
             var queryAmigo = _applicationDbContext.UserInterests.Where(ui => ui.UserId == request.IdAmigo).ToList();
-
+            
             var responseRequest = new BaseResponse<InterestComparsionResponse>();
 
             var user = await _applicationDbContext.Users.FirstOrDefaultAsync(uss => uss.Id == request.UserId,
                 cancellationToken);
 
             var userAmigo = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.Id == request.IdAmigo, cancellationToken);
+
+            var response = new InterestComparsionResponse();
+            
+            if (user.Interest == null || userAmigo.Interest == null)
+            {
+                return response;
+            }
 
             var commonInterest = false;
 
@@ -44,7 +51,6 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
 
                 if (commonInterest == true) break;
             }
-            var response = new InterestComparsionResponse();
 
             if (commonInterest == true) response.IdAmigo = request.IdAmigo;
 
