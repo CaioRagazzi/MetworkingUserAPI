@@ -14,7 +14,11 @@ namespace MetWorkingUserInfrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
                     configuration["METWORKING_CONNECTION"],
-                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                    b =>
+                    {
+                        b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+                        b.EnableRetryOnFailure();
+                    }), ServiceLifetime.Transient);
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
         }
