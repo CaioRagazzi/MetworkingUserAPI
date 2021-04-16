@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.UserInterest.Commands;
 using MetWorkingUserApplication.UserInterest.Queries;
@@ -30,27 +28,12 @@ namespace MetWorkingUserPresentation.Controllers.UserInterest
         }
 
         [HttpPost("interestCompare/{id}")]
-        public async Task<IActionResult> InterestComparsion(Guid id, [FromBody] InterestComparsionRequest request)
+        public async Task<IActionResult> InterestComparsion(Guid id, [FromBody] InterestComparsionResponse request)
         {
-            List<InterestComparsionResponse> interestCompareResponse = new();
-            var response = new BaseResponse<List<InterestComparsionResponse>>();
+            var query = new InterestComparsionQuery(id, request);
+            var result = await Mediator.Send(query);
 
-            foreach (var a in request.IdAmigos)
-            {
-                var query = new InterestComparsionQuery(id, a.IdAmigo);
-                var result = await Mediator.Send(query);
-
-                Guid guid = new("00000000-0000-0000-0000-000000000000");
-
-                if (!result.IdAmigo.Equals(guid))
-                {
-                    interestCompareResponse.Add(result);
-                }
-            }
-
-            response.SetIsOk(interestCompareResponse);
-
-            return await ResponseBase(response);
+            return await ResponseBase(result);
 
         }
 

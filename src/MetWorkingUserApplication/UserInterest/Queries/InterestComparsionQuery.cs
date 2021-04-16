@@ -4,14 +4,14 @@ using MetWorkingUserApplication.Contracts.Response;
 
 namespace MetWorkingUserApplication.UserInterest.Queries
 {
-    public class InterestComparsionQuery : IRequest<InterestComparsionResponse>
+    public class InterestComparsionQuery : IRequest<BaseResponse<InterestComparsionResponse>>
     {
-        public InterestComparsionQuery(Guid userId, Guid idAmigo)
+        public InterestComparsionQuery(Guid userId, InterestComparsionResponse idAmigo)
         {
             UserId = userId;
-            IdAmigo = idAmigo;
+            IdAmigos = idAmigo;
         }
         public Guid UserId { get; set; }
-        public Guid IdAmigo { get; set; }
+        public InterestComparsionResponse IdAmigos { get; set; }
     }
 }

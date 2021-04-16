@@ -7,7 +7,6 @@ using AutoMapper;
 using MediatR;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
-using MetWorkingUserApplication.Queries;
 using MetWorkingUserApplication.User.Queries;
 
 namespace MetWorkingUserApplication.User.Handlers

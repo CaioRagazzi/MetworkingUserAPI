@@ -1,7 +1,6 @@
 using System;
 using MediatR;
 using MetWorkingUserApplication.Contracts.Response;
-using MetWorkingUserDomain.Entities;
 
 namespace MetWorkingUserApplication.UserInterest.Commands
 {

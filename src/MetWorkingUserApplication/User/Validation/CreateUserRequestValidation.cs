@@ -1,6 +1,5 @@
 using System.Linq;
 using FluentValidation;
-using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserApplication.User.Commands;
 

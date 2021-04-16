@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MetWorkingUserApplication.UserInterest.Handlers
 {
-    public class InterestComparsionHandler : IRequestHandler<InterestComparsionQuery, InterestComparsionResponse>
+    public class InterestComparsionHandler : IRequestHandler<InterestComparsionQuery, BaseResponse<InterestComparsionResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         public InterestComparsionHandler(IApplicationDbContext context)
@@ -17,42 +17,27 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
             _applicationDbContext = context;
         }
 
-        public async Task<InterestComparsionResponse> Handle(InterestComparsionQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<InterestComparsionResponse>> Handle(InterestComparsionQuery request, CancellationToken cancellationToken)
         {
-            var query = _applicationDbContext.UserInterests.Where(ui => ui.UserId == request.UserId).ToList();
-            var queryAmigo = _applicationDbContext.UserInterests.Where(ui => ui.UserId == request.IdAmigo).ToList();
+            var usersInterestDbSet = _applicationDbContext.UserInterests;
+
+            var userInterestsList = await (from userInterests in usersInterestDbSet
+                where userInterests.UserId == request.UserId
+                select userInterests.InterestId).ToListAsync(cancellationToken);
             
-            var responseRequest = new BaseResponse<InterestComparsionResponse>();
+            var userInterestsListFriends = await (from userInterests in usersInterestDbSet
+                where  userInterestsList.Contains(userInterests.InterestId) && request.IdAmigos.IdAmigos.Contains(userInterests.UserId)
+                select userInterests).ToListAsync(cancellationToken);
 
-            var user = await _applicationDbContext.Users.FirstOrDefaultAsync(uss => uss.Id == request.UserId,
-                cancellationToken);
-
-            var userAmigo = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.Id == request.IdAmigo, cancellationToken);
-
-            var response = new InterestComparsionResponse();
+            var interestComparsionResponses = new InterestComparsionResponse();
             
-            if (user.Interest == null || userAmigo.Interest == null)
+            foreach (var userInterestsListFriend in userInterestsListFriends)
             {
-                return response;
+                interestComparsionResponses.IdAmigos.Add(userInterestsListFriend.UserId);
             }
 
-            var commonInterest = false;
-
-            foreach (var i in user.Interest)
-            {
-                foreach (var j in userAmigo.Interest)
-                {
-                    if (i.InterestId == j.InterestId)
-                    {
-                        commonInterest = true;
-                        break;
-                    }
-                }
-
-                if (commonInterest == true) break;
-            }
-
-            if (commonInterest == true) response.IdAmigo = request.IdAmigo;
+            var response = new BaseResponse<InterestComparsionResponse>();
+            response.SetIsOk(interestComparsionResponses);
 
             return response;
         }

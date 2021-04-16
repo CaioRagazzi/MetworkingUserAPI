@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using FluentAssertions;
-using MetWorkingUserApplication.Commands;
 using MetWorkingUserApplication.Contracts.Request;
 using MetWorkingUserApplication.User.Commands;
 using NUnit.Framework;
