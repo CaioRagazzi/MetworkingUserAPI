@@ -66,9 +66,9 @@ namespace MetWorkingUserPresentation.Controllers.User
         }
         
         [HttpGet("")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromHeader] int page = 0, [FromHeader] int totalPerPage = 2)
         {
-            var query = new GetAllUsersQuery();
+            var query = new GetAllUsersQuery(page, totalPerPage);
             var result = await Mediator.Send(query);
 
             return await ResponseBase(result);

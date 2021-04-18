@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
@@ -11,14 +10,12 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
 {
     public class DeleteUserInterestBydIdHandler : IRequestHandler<DeleteUserInterestByIdCommand, BaseResponse<string>>
     {
-        public DeleteUserInterestBydIdHandler(IApplicationDbContext applicationDbContext, IMapper mapper)
+        public DeleteUserInterestBydIdHandler(IApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
-            _mapper = mapper;
         }
 
         private readonly IApplicationDbContext _applicationDbContext;
-        private readonly IMapper _mapper;
         
         public async Task<BaseResponse<string>> Handle(DeleteUserInterestByIdCommand request, CancellationToken cancellationToken)
         {

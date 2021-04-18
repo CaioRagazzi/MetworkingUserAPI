@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MetWorkingUserApplication.UserInterest.Handlers
 {
-    public class InterestComparsionHandler : IRequestHandler<InterestComparsionQuery, BaseResponse<InterestComparsionResponse>>
+    public class InterestComparisonHandler : IRequestHandler<InterestComparsionQuery, BaseResponse<InterestComparsionResponse>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
-        public InterestComparsionHandler(IApplicationDbContext context)
+        public InterestComparisonHandler(IApplicationDbContext context)
         {
             _applicationDbContext = context;
         }
@@ -29,15 +29,15 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
                 where  userInterestsList.Contains(userInterests.InterestId) && request.IdAmigos.IdAmigos.Contains(userInterests.UserId)
                 select userInterests).ToListAsync(cancellationToken);
 
-            var interestComparsionResponses = new InterestComparsionResponse();
+            var interestComparisonResponses = new InterestComparsionResponse();
             
             foreach (var userInterestsListFriend in userInterestsListFriends)
             {
-                interestComparsionResponses.IdAmigos.Add(userInterestsListFriend.UserId);
+                interestComparisonResponses.IdAmigos.Add(userInterestsListFriend.UserId);
             }
 
             var response = new BaseResponse<InterestComparsionResponse>();
-            response.SetIsOk(interestComparsionResponses);
+            response.SetIsOk(interestComparisonResponses);
 
             return response;
         }

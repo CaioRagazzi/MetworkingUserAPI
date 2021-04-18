@@ -23,7 +23,7 @@ namespace MetWorkingUserApplication.User.Handlers
 
         public Task<BaseResponse<List<UserResponse>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var allUsers = _applicationDbContext.Users.ToList();
+            var allUsers = _applicationDbContext.Users.Skip(request.Page).Take(request.TotalPerPage).ToList();
             
             var userResponse = _mapper.Map<List<UserResponse>>(allUsers);
             var response = new BaseResponse<List<UserResponse>>();

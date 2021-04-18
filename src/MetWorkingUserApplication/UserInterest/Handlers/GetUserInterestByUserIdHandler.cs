@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +19,11 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
         
         public async Task<BaseResponse<UserInterestResponse>> Handle(GetUserInterestByUserIdQuery request, CancellationToken cancellationToken)
         {
-            var query = _applicationDbContext.UserInterests.Where(ui => ui.UserId == request.UserId).ToList();
-
+            var interests = _applicationDbContext.Interest;
+            var userInterests = _applicationDbContext.UserInterests;
+            
             var responseRequest = new BaseResponse<UserInterestResponse>();
-
+            
             var user = await _applicationDbContext.Users.FirstOrDefaultAsync(uss => uss.Id == request.UserId,
                 cancellationToken);
             
@@ -32,19 +32,19 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
                 responseRequest.SetValidationErrors(new []{"User Not found!"});
                 return responseRequest;
             }
-                        
+
+            var query = await (from interest in interests
+                join userInterest in userInterests on interest.Id equals userInterest.InterestId
+                where userInterest.UserId == user.Id
+                select interest).ToListAsync(cancellationToken);
+
             var response = new UserInterestResponse
             {
                 UserId = user.Id,
-                Interests = new List<MetWorkingUserDomain.Entities.Interest>(),
+                Interests = query,
                 UserName = user.Name
             };
-
-            foreach (var item in query)
-            {
-                var interestToAdd = await _applicationDbContext.Interest.FirstOrDefaultAsync(it => it.Id == item.InterestId, cancellationToken);
-                response.Interests.Add(interestToAdd);
-            }
+            
             responseRequest.SetIsOk(response);
 
             return responseRequest;
