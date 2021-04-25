@@ -25,6 +25,7 @@ namespace MetWorkingUserPresentation
             services.AddControllers();
             services.AddInfrastructure(Configuration);
             services.AddApplication();
+            services.AddHealthChecks();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MetWorkingUserAPI", Version = "v1" });
@@ -55,6 +56,7 @@ namespace MetWorkingUserPresentation
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
