@@ -33,6 +33,10 @@ namespace MetWorkingUserApplication.UserInterest.Handlers
             
             foreach (var userInterestsListFriend in userInterestsListFriends)
             {
+                if (interestComparisonResponses.IdAmigos.Contains(userInterestsListFriend.UserId) || userInterestsListFriend.UserId == request.UserId)
+                {
+                    continue;
+                }
                 interestComparisonResponses.IdAmigos.Add(userInterestsListFriend.UserId);
             }
 

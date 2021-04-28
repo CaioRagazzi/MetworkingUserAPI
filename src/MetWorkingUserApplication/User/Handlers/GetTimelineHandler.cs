@@ -36,7 +36,7 @@ namespace MetWorkingUserApplication.User.Handlers
                 return response;
             }
 
-            var httpResponse = await _httpClient.GetAsync($"http://metworkinggeoapi:5001/timeline/{request.Id}", cancellationToken);
+            var httpResponse = await _httpClient.GetAsync($"http://metworkinggeo:5001/timeline/{request.Id}", cancellationToken);
 
             if (!httpResponse.IsSuccessStatusCode)
             {
