@@ -22,11 +22,6 @@ namespace MetWorkingUserApplication
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddHttpClient<IRequestHandler<GetTimelineQuery, BaseResponse<List<UserResponse>>>, GetTimelineHandler>()
-                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-                .AddPolicyHandler(message => HttpPolicyExtensions.HandleTransientHttpError()
-                    .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));
         }  
     }   
 }

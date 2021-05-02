@@ -8,6 +8,7 @@ using MediatR;
 using MetWorkingUserApplication.Contracts.Response;
 using MetWorkingUserApplication.Interfaces;
 using MetWorkingUserApplication.User.Queries;
+using MetWorkingUserDomain.Interfaces;
 
 namespace MetWorkingUserApplication.User.Handlers
 {
@@ -15,13 +16,13 @@ namespace MetWorkingUserApplication.User.Handlers
     {
         private IApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
-        private readonly HttpClient _httpClient;
+        private readonly IGeoService _geoService;
 
-        public GetTimelineHandler(IApplicationDbContext context, IMapper mapper, HttpClient httpClient)
+        public GetTimelineHandler(IApplicationDbContext context, IMapper mapper, IGeoService geoService)
         {
             _applicationDbContext = context;
             _mapper = mapper;
-            _httpClient = httpClient;
+            _geoService = geoService;
         }
         
         public async Task<BaseResponse<List<UserResponse>>> Handle(GetTimelineQuery request, CancellationToken cancellationToken)
@@ -36,21 +37,12 @@ namespace MetWorkingUserApplication.User.Handlers
                 return response;
             }
 
-            var httpResponse = await _httpClient.GetAsync($"http://metworkinggeo:5001/timeline/{request.Id}", cancellationToken);
-
-            if (!httpResponse.IsSuccessStatusCode)
-            {
-                response.SetValidationErrors(new []{"Erro ao buscar usuario!"});
-                return response;
-            }
-
-            var readAsStringAsync = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
-            var responseTimeLine = JsonSerializer.Deserialize<List<GeoTimelineResponse>>(readAsStringAsync);
+            var userTimeline = await _geoService.GetUserTimeLine(request.Id);
 
             var userList = new List<UserResponse>();
 
-            if (responseTimeLine != null)
-                foreach (var userGuid in responseTimeLine)
+            if (userTimeline != null)
+                foreach (var userGuid in userTimeline)
                 {
                     var findUserAsync = await _applicationDbContext.Users.FindAsync(userGuid.idAmigo);
                     if (findUserAsync != null)
@@ -60,7 +52,7 @@ namespace MetWorkingUserApplication.User.Handlers
                     }
                 }
 
-            if (responseTimeLine == null)
+            if (userTimeline != null && userTimeline.Count == 0)
             {
                 response.SetValidationErrors(new []{"Timeline vazia!"});
                 return response;
