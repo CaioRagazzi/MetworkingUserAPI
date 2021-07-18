@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MetWorkingUserInfrastructure.Migrations
 {
-    public partial class UserNewFields : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace MetWorkingUserInfrastructure.Migrations
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(maxLength: 255, nullable: false),
-                    Image = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    Image = table.Column<string>(maxLength: 255, nullable: true),
                     Description = table.Column<string>(maxLength: 255, nullable: true),
                     Company = table.Column<string>(maxLength: 255, nullable: true),
                     Role = table.Column<string>(maxLength: 255, nullable: true)

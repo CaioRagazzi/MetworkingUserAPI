@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MetWorkingUserInfrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210216165740_UserNewFields")]
-    partial class UserNewFields
+    [Migration("20210717222002_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,8 +57,9 @@ namespace MetWorkingUserInfrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("BLOB");
+                    b.Property<string>("Image")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Name")
                         .IsRequired()

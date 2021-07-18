@@ -14,7 +14,7 @@ namespace MetWorkingUserPresentation
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .AddServiceDiscovery(options => options.UseEureka())
+                //.AddServiceDiscovery(options => options.UseEureka())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

@@ -3,6 +3,7 @@ using System;
 using MetWorkingUserInfrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MetWorkingUserInfrastructure.Migrations
 {
